@@ -1,0 +1,74 @@
+# Homework: Agent Craft
+
+This is not "write code that does X" homework — the agent makes that trivial, and it
+wouldn't teach you anything. This homework builds two things: a **working agent setup you'll
+actually use**, and **four mental models** for when the agent goes wrong. The deliverable
+is your own understanding plus a setup you keep.
+
+Estimated time: **45–60 min.** Do it before Session 2 if you can.
+
+---
+
+## Part A — Set up your workspace (~20 min)
+
+The goal: stop using AI in a single chat window that forgets your project every time.
+Persistent context lives in a *file in your repo*, not in your memory of the conversation.
+
+### Level 1 — One CLAUDE.md (10 min)
+1. Open your *own* main project in VS Code (or this repo if you don't have one yet).
+2. Create a `CLAUDE.md` at the project root.
+3. Write 3–5 lines: what the project is, language/framework, any conventions
+   (e.g. "raw data is read-only in `/nfs/...`, never overwrite it; processed data → `results/`").
+4. Open a Claude Code terminal in that directory (`claude`).
+5. Ask: **"what do you know about this project?"** — it should reference your CLAUDE.md.
+
+**Checkpoint:** Claude answers using your CLAUDE.md, not a generic guess.
+
+### Level 2 — Scoped context with subdirectories (10 min)
+1. Pick two subdirectories (e.g. `data/` and `analysis/`).
+2. Add a `CLAUDE.md` to one with a *specific* instruction ("data files are TSV, not CSV"
+   or "always use conda env `ppc`").
+3. Open two terminals — one `cd`'d into each subdirectory — and run `claude` in both.
+4. Ask both the same question. Notice the different context.
+
+**Checkpoint:** the terminal in the folder with its own CLAUDE.md gives a more specific answer.
+
+> This *is* Module 3 ("the index that points"). You're not reading about the mechanism —
+> you're building it.
+
+---
+
+## Part B — Learn the four mechanisms (~25 min)
+
+1. In a Claude Code terminal **inside this repo**, run:
+   ```
+   /teach-me
+   ```
+2. It tutors you through `curriculum/` — four short modules. It will **quiz you** and won't
+   advance until you can explain each one back. That's deliberate: the point is verified
+   understanding, not "I read it."
+3. For each module, the tutor will ask the transfer question: **"where does this failure
+   show up in your own lab work?"** Have a real answer ready — that's where the learning
+   actually sticks.
+
+The four mechanisms:
+| # | Mechanism (one line) |
+|---|----------------------|
+| 1 | The limit is your attention to direct the AI, not the AI's capability. |
+| 2 | Too-big a task → the agent rearranges the mess instead of removing it. Decompose or orchestrate. |
+| 3 | A `CLAUDE.md` that points at your files beats re-explaining your project every session. |
+| 4 | "The command succeeded" ≠ "the thing I wanted is true." Check the world, not the exit code. |
+
+**Done when:** you can state all four in one sentence each, *and* you've named a real
+example of each from your own work.
+
+---
+
+## A note on how this feels
+
+Some people feel uneasy using AI for coding — it can change what made the work satisfying,
+and you may swing between "it's so smart" and "then why do I feel dumb." That's normal and
+worth naming. A useful split: separate **what's personally important to you to do yourself**
+from **what just needs to get done.** The agent is for the second pile. The four mechanisms
+are how you stay in control of both piles instead of being managed by the tool. Bring this
+to Session 2 — it's part of the discussion, not a side issue.

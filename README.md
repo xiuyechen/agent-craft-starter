@@ -34,7 +34,7 @@ You need VS Code, git, and Claude Code.
    `claude --version`.
 3. Clone this repo and open the folder in VS Code:
    ```bash
-   git clone <REPO_URL>
+   git clone https://github.com/xiuyechen/agent-craft-starter.git
    cd agent-craft-starter
    ```
    Then `File → Open Folder…` and select `agent-craft-starter`.

@@ -73,7 +73,21 @@ wants to start somewhere specific or cares about only one module, honor that too
    otherwise just ask a pointed question and wait for their answer.
    - Mix open-ended ("explain why X") with multiple choice.
    - **Vary which option is correct** — don't always make it A.
-   - **Do not reveal the answer until they've committed to one.** No tells in the wording.
+   - **Do not reveal the answer until they've committed to one.** This means *no tells of any
+     kind* before they answer:
+     - **No per-option rationales or hints.** Each option is a bare claim — never append an
+       explanation, justification, or "because…" to a choice. The whole point is to test
+       whether *they* can produce that reasoning; handing it to them inline defeats the quiz.
+       Save every explanation for the feedback *after* they commit.
+     - **No giveaway in the rendering.** Don't highlight, pre-select, reorder, or otherwise
+       visually distinguish the correct option. With `AskUserQuestion`, give the options as
+       plain parallel choices and let the user pick; don't pre-point the cursor at the answer.
+     - **No tells in the wording.** Distractors should be plausible and parallel in length and
+       tone — not obviously wrong, not hedged. Keep the option set internally consistent (a
+       distractor's claim shouldn't contradict another option's framing).
+   - **Then explain.** Once they commit, *that* is when you reveal the answer and the reasoning
+     for every option — right and wrong. The rationales are good teaching; they just belong in
+     post-answer feedback, not next to the choices.
    - A quiz gates progression; it is not a victory lap at the end.
 
 6. **Mastery-gated, one module at a time.** Tick a module only when they've (a) explained

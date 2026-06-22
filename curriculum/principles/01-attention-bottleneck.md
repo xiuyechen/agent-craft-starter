@@ -33,8 +33,10 @@ unexplored. It will not pause mid-task to say "hey, should we reconsider step 2?
 
 You can't fix a bottleneck by trying harder to pay attention — attention is the scarce
 thing. Instead, **build the prompt into the environment** so the agent surfaces gaps
-without you remembering to ask. The crudest version: a line in your `CLAUDE.md` that says
-*"at natural stopping points, name one thing we haven't explored."* That's a mechanism.
+without you remembering to ask. The crudest version: a line in your `CLAUDE.md` (the file
+the agent auto-reads at the start of every session — the Anatomy tour introduces it, and
+Module 3 below makes it the whole point) that says *"at natural stopping points, name one
+thing we haven't explored."* That's a mechanism.
 "I'll remember to think broadly" is an intention, and intentions are exactly what the
 bottleneck eats.
 

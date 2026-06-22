@@ -1,21 +1,29 @@
-# Curriculum — Agent Craft
+# Curriculum
 
-Four short modules. They are the *content* the `teach-me` skill tutors you through —
-you don't read them like a textbook, you run `/teach-me` and let it quiz you until you
-can explain each one back. (You *can* read them; the point is that reading isn't the test.)
+Two short tracks on working with Claude Code. They're the *content* the `/teach-me` skill
+tutors you through — you don't read them like a textbook, you run `/teach-me` and let it
+quiz you until you can explain each part back. (You *can* read them; the point is that
+reading isn't the test.)
 
-Spine: **mechanisms over intentions.** A good intention ("I'll be careful") is not a
-mechanism. A mechanism is something that makes the failure structurally hard. Every
-module is one mechanism.
+Do them in this order:
 
-| Module | One line |
-|--------|----------|
-| `01-attention-bottleneck.md` | The limit isn't the AI's capability — it's your attention to direct it. |
-| `02-scope-ratio.md` | Point an agent at too big a task and it rearranges the mess instead of removing it. |
-| `03-index-that-points.md` | A `CLAUDE.md` that points at your files beats re-explaining your project every session. |
-| `04-monitor-outcomes.md` | "The command succeeded" is not "the thing I wanted is true." Check the world, not the exit code. |
+### 1. [Anatomy of Claude Code](tour/) — the structural tour
 
-Order matters for the first two (they're the *why*); 03 and 04 are the two mechanisms
-you'll use on day one.
+*What the parts are.* A crash course in the machine: the model and the harness, the system
+prompt, context, CLAUDE.md, tools, and sessions/turns/hooks. Like learning enough of a
+language to get around before the trip — afterward, the words mean something.
 
-*Condensed from the full 8-lesson Agent Craft curriculum for a first, beginner session.*
+### 2. [Principles — Agent Craft](principles/) — mechanisms over intentions
+
+*How to wield the parts well.* Four failure modes and the mechanism that makes each one
+structurally hard: the attention bottleneck, the scope ratio, the index that points
+(CLAUDE.md), and monitoring outcomes not actions.
+
+---
+
+**Why this order:** you can't internalize "CLAUDE.md is an index that points the agent"
+(Principles 03) until you know what CLAUDE.md *is* (Anatomy 04). The tour gives you the
+vocabulary; the principles give you the judgment. Each principle, you'll notice, is really
+a statement about one of the parts the tour introduced.
+
+*Condensed from the full Agent Craft curriculum for a first, beginner session.*

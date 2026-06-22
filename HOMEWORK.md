@@ -1,11 +1,28 @@
 # Homework: Agent Craft
 
 This is not "write code that does X" homework — the agent makes that trivial, and it
-wouldn't teach you anything. This homework builds two things: a **working agent setup you'll
-actually use**, and **four mental models** for when the agent goes wrong. The deliverable
-is your own understanding plus a setup you keep.
+wouldn't teach you anything. This homework builds three things: a **mental map of what
+Claude Code actually is** (its parts), a **working agent setup you'll actually use**, and
+**four mental models** for when the agent goes wrong. The deliverable is your own
+understanding plus a setup you keep.
 
-Estimated time: **45–60 min.** Do it before Session 2 if you can.
+Estimated time: **60–75 min.** Do it before Session 2 if you can.
+
+---
+
+## Part 0 — Take the tour (~15 min)
+
+Before the hands-on parts, get the vocabulary. In a Claude Code terminal **inside this
+repo**, run `/teach-me` and ask for the **Anatomy of Claude Code** track — six short
+modules on the parts of the machine: the model and the harness, the system prompt, context,
+CLAUDE.md, tools, and sessions/turns/hooks. It quizzes you until you can explain each part
+back.
+
+**Done when:** you can say, for each part, what problem it solves and whether it's something
+*you* control or something Anthropic ships. (This is the tour in `curriculum/tour/`.)
+
+> Why first: Parts A and B below both refer to these parts by name. Take the tour and the
+> rest of the homework stops being jargon.
 
 ---
 
@@ -33,8 +50,8 @@ Persistent context lives in a *file in your repo*, not in your memory of the con
 
 **Checkpoint:** the terminal in the folder with its own CLAUDE.md gives a more specific answer.
 
-> This *is* Module 3 ("the index that points"). You're not reading about the mechanism —
-> you're building it.
+> This *is* CLAUDE.md from the tour (Anatomy 04) and the "index that points" principle
+> (Principles 03). You're not reading about the mechanism — you're building it.
 
 ---
 
@@ -44,9 +61,10 @@ Persistent context lives in a *file in your repo*, not in your memory of the con
    ```
    /teach-me
    ```
-2. It tutors you through `curriculum/` — four short modules. It will **quiz you** and won't
-   advance until you can explain each one back. That's deliberate: the point is verified
-   understanding, not "I read it."
+   and ask for the **Agent Craft principles** track (you did the Anatomy tour in Part 0).
+2. It tutors you through `curriculum/principles/` — four short modules. It will **quiz you**
+   and won't advance until you can explain each one back. That's deliberate: the point is
+   verified understanding, not "I read it."
 3. For each module, the tutor will ask the transfer question: **"where does this failure
    show up in your own lab work?"** Have a real answer ready — that's where the learning
    actually sticks.

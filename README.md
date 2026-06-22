@@ -18,12 +18,14 @@ Full instructions in [`HOMEWORK.md`](HOMEWORK.md). In short:
 1. Set up your workspace (steps below).
 2. Clone this repo and open it in VS Code.
 3. Open a Claude Code terminal in the repo and run `/teach-me`. It tutors you through the
-   four modules in `curriculum/`, quizzing you until you can explain each back.
-4. For each module, name where that failure shows up in your own work. That's the real
-   deliverable.
+   two tracks in `curriculum/` — first the **Anatomy of Claude Code** tour (what the parts
+   are), then the **Agent Craft** principles (how to wield them) — quizzing you until you
+   can explain each module back.
+4. For each module, connect it to your own work: for the tour, point to the part in your own
+   setup; for the principles, name where that failure shows up. That's the real deliverable.
 
-You're done when you can state all four mechanisms in one sentence each, with a real
-example of each from your own work.
+You're done when you can name each part of the machine from the tour, state each principle's
+mechanism in one sentence, and connect both to your own work.
 
 ## Setup (one time)
 
@@ -41,7 +43,8 @@ You need VS Code, git, and Claude Code.
 4. Open VS Code's integrated terminal (`` Ctrl+` ``), make sure it's in the repo directory,
    and run `claude`.
 5. Ask it: "what does this project do?" It should already know, because the repo has a
-   `CLAUDE.md` that points it at the right files. That is module 3, working live.
+   `CLAUDE.md` that points it at the right files. That is the CLAUDE.md from the tour
+   (Anatomy 04) and the "index that points" principle (Principles 03), working live.
 6. Run the tutor:
    ```
    /teach-me
@@ -57,8 +60,10 @@ On HPC, the same flow works: clone into your scratch or project space, `cd` in, 
 agent-craft-starter/
 ├── README.md
 ├── HOMEWORK.md           # the assignment, in full
-├── CLAUDE.md             # the index that points Claude at the project (module 3)
-├── curriculum/           # the four modules /teach-me tutors you through
+├── CLAUDE.md             # the index that points Claude at the project (Anatomy 04 / Principles 03)
+├── curriculum/           # two tracks /teach-me tutors you through
+│   ├── tour/             #   Anatomy of Claude Code — the structural tour (6 modules)
+│   └── principles/       #   Agent Craft — mechanisms over intentions (4 modules)
 ├── .claude/skills/teach-me/SKILL.md   # the tutor skill (runs on clone, no install)
 ├── data/                 # synthetic trial table + schema
 ├── analysis/load_data.py # a runnable stub

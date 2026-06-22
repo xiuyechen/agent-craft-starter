@@ -18,8 +18,11 @@ onset, and does the prediction strengthen with stimulus `coherence`? See `notes.
 
 ## This is also a workshop repo
 Besides being a sample project, this repo carries the Agent Craft homework:
-- `curriculum/` — four short modules on working well with agents.
+- `curriculum/` — two short tracks on working with Claude Code. `curriculum/tour/`
+  ("Anatomy of Claude Code," 6 modules) is the structural tour of the parts; then
+  `curriculum/principles/` ("Agent Craft," 4 modules) is mechanisms over intentions. See
+  `curriculum/README.md` for the map and intended order (tour first, then principles).
 - `.claude/skills/teach-me/` — a tutor skill. If the user runs `/teach-me` or says
-  "teach me the curriculum," follow that skill: tutor them through `curriculum/` in order,
+  "teach me the curriculum," follow that skill: tutor them through the tracks in order,
   mastery-gated, quizzing to confirm understanding. Don't just summarize the modules.
 - `HOMEWORK.md` / `README.md` — the assignment and setup steps.

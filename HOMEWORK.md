@@ -8,7 +8,7 @@
 This is not "write code that does X" homework — the agent makes that trivial, and it
 wouldn't teach you anything. This homework builds three things: a **mental map of what
 Claude Code actually is** (its parts), a **working agent setup you'll actually use**, and
-**four mental models** for when the agent goes wrong. The deliverable is your own
+**five mental models** for when the agent goes wrong. The deliverable is your own
 understanding plus a setup you keep.
 
 Estimated time: **60–75 min.** Do it before Session 2 if you can.
@@ -60,30 +60,38 @@ Persistent context lives in a *file in your repo*, not in your memory of the con
 
 ---
 
-## Part B — Learn the four mechanisms (~25 min)
+## Part B — Learn the five mechanisms (~25 min)
 
 1. In a Claude Code terminal **inside this repo**, run:
    ```
    /teach-me
    ```
    and ask for the **Agent Craft principles** track (you did the Anatomy tour in Part 0).
-2. It tutors you through `curriculum/principles/` — four short modules. It will **quiz you**
+2. It tutors you through `curriculum/principles/` — five short modules. It will **quiz you**
    and won't advance until you can explain each one back. That's deliberate: the point is
    verified understanding, not "I read it."
 3. For each module, the tutor will ask the transfer question: **"where does this failure
    show up in your own lab work?"** Have a real answer ready — that's where the learning
    actually sticks.
 
-The four mechanisms:
+The five mechanisms:
 | # | Mechanism (one line) |
 |---|----------------------|
 | 1 | The limit is your attention to direct the AI, not the AI's capability. |
 | 2 | Too-big a task → the agent rearranges the mess instead of removing it. Decompose or orchestrate. |
 | 3 | A `CLAUDE.md` that points at your files beats re-explaining your project every session. |
 | 4 | "The command succeeded" ≠ "the thing I wanted is true." Check the world, not the exit code. |
+| 5 | A rule in `CLAUDE.md` is an intention; a deny-list + hook is a wall. For irreversible loss, build the wall. |
 
-**Done when:** you can state all four in one sentence each, *and* you've named a real
+**Done when:** you can state all five in one sentence each, *and* you've named a real
 example of each from your own work.
+
+> Module 5 is live in this repo. This starter ships a real guardrail: `.claude/settings.json`
+> blocks `rm`, and `.claude/hooks/guard.sh` refuses to let the agent delete files to free a
+> full disk (the failure that ate someone's weekend sweep). It uses `trash` instead — install
+> it once so the recoverable path works: `brew install trash` (macOS) or
+> `pip install trash-cli` (Linux). Try it: ask the agent to `rm` something and watch it get
+> blocked.
 
 ---
 
@@ -92,6 +100,6 @@ example of each from your own work.
 Some people feel uneasy using AI for coding — it can change what made the work satisfying,
 and you may swing between "it's so smart" and "then why do I feel dumb." That's normal and
 worth naming. A useful split: separate **what's personally important to you to do yourself**
-from **what just needs to get done.** The agent is for the second pile. The four mechanisms
+from **what just needs to get done.** The agent is for the second pile. The five mechanisms
 are how you stay in control of both piles instead of being managed by the tool. Bring this
 to Session 2 — it's part of the discussion, not a side issue.

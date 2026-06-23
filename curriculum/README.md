@@ -15,9 +15,10 @@ language to get around before the trip — afterward, the words mean something.
 
 ### 2. [Principles — Agent Craft](principles/) — mechanisms over intentions
 
-*How to wield the parts well.* Four failure modes and the mechanism that makes each one
+*How to wield the parts well.* Five failure modes and the mechanism that makes each one
 structurally hard: the attention bottleneck, the scope ratio, the index that points
-(CLAUDE.md), and monitoring outcomes not actions.
+(CLAUDE.md), monitoring outcomes not actions, and guardrails over good behavior (the
+deny-list + hook that ship live in this repo).
 
 ---
 

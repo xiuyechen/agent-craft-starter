@@ -9,7 +9,9 @@ neuroscience data) so you practice on something shaped like real lab work.
 
 The spine of the workshop is **mechanisms over intentions**. "I'll be careful with the
 agent" is an intention. A mechanism is something that makes the failure structurally hard.
-The homework is to internalize four of them.
+The homework is to internalize five of them — and the fifth, a guardrail that blocks `rm`
+and won't let the agent delete files to free a full disk, is wired up and running in this
+very repo.
 
 ## The homework
 
@@ -68,7 +70,9 @@ agent-craft-starter/
 ├── CLAUDE.md             # the index that points Claude at the project (Anatomy 04 / Principles 03)
 ├── curriculum/           # two tracks /teach-me tutors you through
 │   ├── tour/             #   Anatomy of Claude Code — the structural tour (6 modules)
-│   └── principles/       #   Agent Craft — mechanisms over intentions (4 modules)
+│   └── principles/       #   Agent Craft — mechanisms over intentions (5 modules)
+├── .claude/settings.json              # deny-list + hook wiring (Principles 05) — a real guardrail
+├── .claude/hooks/guard.sh             # blocks rm and refuses to delete on a full disk
 ├── .claude/skills/teach-me/SKILL.md   # the tutor skill (runs on clone, no install)
 ├── data/                 # synthetic trial table + schema
 ├── analysis/load_data.py # a runnable stub

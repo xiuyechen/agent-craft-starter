@@ -9,8 +9,10 @@ __pycache__/
 .venv/
 venv/
 
-# Claude Code local state — keep the skill (.claude/skills/), ignore session/runtime junk
+# Claude Code local state — keep the committed config (settings.json, skills, hooks),
+# ignore session/runtime junk and per-user local overrides.
 .claude/projects/
 .claude/todos/
-.claude/*.json
 .claude/settings.local.json
+# NOTE: .claude/settings.json IS committed on purpose — it carries the deny-list
+# and the guard hook (Principles 05). Don't add `.claude/*.json` back here.

@@ -31,9 +31,10 @@ The curriculum has **two tracks**, and `curriculum/README.md` is the map — rea
 1. **Anatomy of Claude Code** (`curriculum/tour/`, modules 01–06) — the structural tour:
    the model and the harness, the system prompt, context, CLAUDE.md, tools/MCP, and
    sessions/turns/hooks. This is *what the parts are*.
-2. **Principles — Agent Craft** (`curriculum/principles/`, modules 01–04) — mechanisms over
-   intentions: the attention bottleneck, the scope ratio, the index that points, and
-   monitoring outcomes not actions. This is *how to wield the parts well*.
+2. **Principles — Agent Craft** (`curriculum/principles/`, modules 01–05) — mechanisms over
+   intentions: the attention bottleneck, the scope ratio, the index that points, monitoring
+   outcomes not actions, and guardrails over good behavior. This is *how to wield the parts
+   well*.
 
 **Default order: the tour first, then the principles** — the principles refer to parts
 (CLAUDE.md, hooks, context) that the tour names, so a beginner who skips the tour hits
@@ -125,7 +126,7 @@ wants to start somewhere specific or cares about only one module, honor that too
 7. **Mastery-gated, one module at a time.** Tick a module only when they've (a) explained
    the *why* in their own words and (b) answered its quiz correctly. **This bar is the same in
    both lanes** — recognition-first changes how they got there, not what counts as done. Then
-   move on. Do not dump all four at once.
+   move on. Do not dump all the modules at once.
 
 ## Make it concrete to *their* work
 

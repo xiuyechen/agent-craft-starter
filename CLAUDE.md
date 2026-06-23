@@ -16,6 +16,16 @@ decision task. (Sample/synthetic data for now.)
 Does pre-movement PPC activity (`ppc_rate_premove`) predict `choice` before movement
 onset, and does the prediction strengthen with stimulus `coherence`? See `notes.md`.
 
+## Safety guardrails (enforced, not just requested)
+- **Never use `rm`/`rmdir`/`shred` or `find -delete`.** Use `trash <path>` — it's
+  recoverable. These are blocked by the deny-list in `.claude/settings.json` and by the
+  `PreToolUse` hook `.claude/hooks/guard.sh`; you'll get a block message if you try.
+- **Never delete files to free disk space.** If the disk is nearly full, STOP and tell the
+  human — report what's filling it (`du -sh */ | sort -h`) and let them decide. The hook
+  blocks *all* commands past 90% disk use for exactly this reason.
+- This is Principles Module 05 (`curriculum/principles/05-guardrails-not-good-behavior.md`)
+  working live: the rule above is the intention; the deny-list and hook are the mechanism.
+
 ## This is also a workshop repo
 Besides being a sample project, this repo carries the Agent Craft homework:
 - `curriculum/` — two short tracks on working with Claude Code. `curriculum/tour/`

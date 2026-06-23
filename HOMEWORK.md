@@ -1,5 +1,10 @@
 # Homework: Agent Craft
 
+> **Never used Claude Code (or a terminal)?** Do the **[setup
+> guide](https://xiuyechen.github.io/agent-craft-starter/setup-guide.html)** first — it walks
+> you from nothing installed to the tutor running, on Mac or Windows, with a check at every
+> step. Then come back here. If `git clone` and `claude --version` are already familiar, skip it.
+
 This is not "write code that does X" homework — the agent makes that trivial, and it
 wouldn't teach you anything. This homework builds three things: a **mental map of what
 Claude Code actually is** (its parts), a **working agent setup you'll actually use**, and

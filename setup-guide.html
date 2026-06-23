@@ -1,0 +1,599 @@
+<title>Agent Craft — Setup Guide</title>
+<style>
+  :root {
+    --ground: #0F1620;
+    --ground-raised: #16202C;
+    --ground-sunken: #0A0F16;
+    --text: #E8EDF2;
+    --text-dim: #94A3B2;
+    --text-faint: #5E6E7E;
+    --accent: #7DE0C2;      /* mint-cyan = "this step passed" */
+    --accent-deep: #2E5F54;
+    --accent-2: #F2B5A0;    /* coral = "if it breaks" */
+    --accent-2-deep: #6E3A30;
+    --rule: #243240;
+    --rule-soft: #1B2530;
+
+    --mono: "JetBrains Mono", "SF Mono", "Menlo", "Consolas", ui-monospace, monospace;
+    --display: "Space Grotesk", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    --body: "Inter", -apple-system, "Segoe UI", system-ui, sans-serif;
+
+    --maxw: 760px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--text);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* faint instrument-panel grid in the background, very low contrast */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--rule-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--rule-soft) 1px, transparent 1px);
+    background-size: 38px 38px;
+    opacity: 0.28;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrap {
+    position: relative;
+    z-index: 1;
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 24px 96px;
+  }
+
+  /* ---------- hero ---------- */
+  header.hero {
+    padding: 88px 0 56px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 22px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .eyebrow::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--accent-deep), transparent);
+  }
+  h1 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(38px, 7vw, 62px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    margin: 0 0 24px;
+  }
+  h1 .soft { color: var(--text-dim); }
+  .lede {
+    font-size: 19px;
+    color: var(--text-dim);
+    max-width: 60ch;
+    margin: 0 0 36px;
+  }
+  .lede strong { color: var(--text); font-weight: 600; }
+
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 28px;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text-faint);
+  }
+  .meta-row span { display: flex; align-items: center; gap: 8px; }
+  .meta-row b { color: var(--text-dim); font-weight: 500; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+
+  /* ---------- the "what you need" callout ---------- */
+  .gate {
+    margin: 40px 0 0;
+    padding: 22px 24px;
+    background: var(--ground-raised);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--accent-2);
+    border-radius: 4px;
+  }
+  .gate h2 {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    margin: 0 0 10px;
+  }
+  .gate p { margin: 0 0 10px; font-size: 15.5px; color: var(--text-dim); }
+  .gate p:last-child { margin-bottom: 0; }
+  .gate strong { color: var(--text); }
+
+  /* ---------- step list ---------- */
+  .steps { margin-top: 16px; }
+
+  .step {
+    position: relative;
+    padding: 52px 0 8px 0;
+    border-bottom: 1px solid var(--rule-soft);
+  }
+  .step:last-child { border-bottom: none; }
+
+  .step-num {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .step-num .bar { color: var(--text-faint); }
+  .step-num .what { color: var(--text-faint); letter-spacing: 0.18em; text-transform: uppercase; font-size: 11px; }
+
+  .step h3 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 27px;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+    margin: 0 0 16px;
+  }
+  .step p { margin: 0 0 16px; color: var(--text-dim); }
+  .step p strong { color: var(--text); font-weight: 600; }
+  .step .text-em { color: var(--text); }
+
+  /* OS fork */
+  .fork { display: flex; flex-direction: column; gap: 12px; margin: 18px 0; }
+  .os {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .os-tag {
+    flex: none;
+    width: 78px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    color: var(--text);
+    padding: 6px 0 0;
+    text-align: right;
+  }
+  .os-tag.mac::before { content: "▲ "; color: var(--accent); }
+  .os-tag.win::before { content: "▦ "; color: var(--accent); }
+  .os-body { flex: 1; color: var(--text-dim); font-size: 15.5px; padding-top: 3px; }
+
+  /* command block — the ONLY place "things you type" live */
+  code.inline {
+    font-family: var(--mono);
+    font-size: 0.88em;
+    background: var(--ground-sunken);
+    border: 1px solid var(--rule-soft);
+    padding: 1px 6px;
+    border-radius: 3px;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  .cmd {
+    font-family: var(--mono);
+    font-size: 14px;
+    background: var(--ground-sunken);
+    border: 1px solid var(--rule);
+    border-radius: 5px;
+    padding: 14px 16px;
+    margin: 12px 0;
+    color: var(--text);
+    overflow-x: auto;
+    position: relative;
+  }
+  .cmd::before {
+    content: "$";
+    color: var(--accent);
+    margin-right: 12px;
+    user-select: none;
+  }
+  .cmd.prompt-slash::before { content: ">"; }
+  .cmd.plain::before { content: ""; margin: 0; }
+
+  /* ---------- the recurring ✓ Check card — the heartbeat of the page ---------- */
+  .check {
+    margin: 18px 0 4px;
+    padding: 16px 18px 16px 48px;
+    background: linear-gradient(180deg, rgba(125,224,194,0.07), rgba(125,224,194,0.02));
+    border: 1px solid var(--accent-deep);
+    border-radius: 6px;
+    position: relative;
+    font-size: 15.5px;
+    color: var(--text);
+  }
+  .check::before {
+    content: "✓";
+    position: absolute;
+    left: 16px;
+    top: 14px;
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    text-align: center;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--ground);
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .check .label {
+    display: block;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .check strong { font-weight: 600; }
+
+  /* "if it breaks" inline note — coral = trouble */
+  .snag {
+    margin: 14px 0 4px;
+    padding: 12px 16px;
+    border-left: 2px solid var(--accent-2);
+    background: rgba(242,181,160,0.05);
+    border-radius: 0 4px 4px 0;
+    font-size: 14.5px;
+    color: var(--text-dim);
+  }
+  .snag b { color: var(--accent-2); font-weight: 600; }
+
+  /* ---------- the VS Code sketch (Step 5 centerpiece) ---------- */
+  figure.sketch { margin: 26px 0 10px; }
+  figure.sketch svg { width: 100%; height: auto; display: block; }
+  figcaption {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-faint);
+    margin-top: 10px;
+    text-align: center;
+    letter-spacing: 0.04em;
+  }
+
+  /* ---------- troubleshooting ---------- */
+  .trouble {
+    margin-top: 64px;
+    padding: 32px 28px;
+    background: var(--ground-raised);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+  }
+  .trouble h2 {
+    font-family: var(--display);
+    font-size: 22px;
+    margin: 0 0 6px;
+    font-weight: 600;
+  }
+  .trouble .sub { color: var(--text-faint); font-size: 14px; margin: 0 0 24px; font-family: var(--mono); }
+  .tr-row {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 6px 24px;
+    padding: 16px 0;
+    border-top: 1px solid var(--rule-soft);
+  }
+  .tr-row:first-of-type { border-top: none; }
+  .tr-sym { color: var(--text); font-size: 15px; }
+  .tr-sym code { font-family: var(--mono); font-size: 0.85em; color: var(--accent-2); }
+  .tr-fix { color: var(--text-dim); font-size: 14.5px; }
+  .tr-fix strong { color: var(--text); }
+
+  /* ---------- footer ---------- */
+  footer {
+    margin-top: 56px;
+    padding-top: 28px;
+    border-top: 1px solid var(--rule);
+    color: var(--text-faint);
+    font-size: 14px;
+  }
+  footer .done {
+    font-family: var(--display);
+    font-size: 20px;
+    color: var(--text);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  footer code { font-family: var(--mono); color: var(--accent); }
+
+  @media (max-width: 560px) {
+    body { font-size: 16px; }
+    .tr-row { grid-template-columns: 1fr; gap: 4px; }
+    .os { flex-direction: column; gap: 4px; }
+    .os-tag { text-align: left; width: auto; }
+    h1 { font-size: 40px; }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .check { transition: border-color 0.2s ease; }
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="hero">
+    <p class="eyebrow">Agent Craft · Homework Setup</p>
+    <h1>From zero to the tutor.<br><span class="soft">Five steps. A checkpoint after each.</span></h1>
+    <p class="lede">
+      This gets you from <strong>nothing installed</strong> to the moment the tutor starts
+      quizzing you — on a Mac or a Windows machine, even if you've never opened a terminal.
+      It doesn't teach the material; that's the homework's job. This is just the plumbing.
+    </p>
+    <div class="meta-row">
+      <span><span class="dot"></span><b>~20–30 min</b>, first time</span>
+      <span><span class="dot"></span>Mac &amp; Windows</span>
+      <span><span class="dot"></span>No coding required</span>
+    </div>
+
+    <div class="gate">
+      <h2>One thing to know first</h2>
+      <p>Claude Code needs a <strong>paid Claude plan</strong> — Pro or Max (or a Team /
+      Enterprise / Console account). <strong>The free Claude.ai plan won't work</strong>: if
+      you only have a free account, sign-in in Step&nbsp;3 gets rejected, and the fix is the
+      plan, not your computer.</p>
+      <p>If your lab or course gave you a specific login or key, use that — ask whoever ran the
+      workshop. You don't have to sort this out this second; just know a free account is the
+      one thing that won't go through.</p>
+    </div>
+  </header>
+
+  <main class="steps">
+
+    <!-- STEP 1 -->
+    <section class="step">
+      <div class="step-num">01<span class="bar">/</span><span class="what">install the editor</span></div>
+      <h3>Install VS Code</h3>
+      <p>VS Code is the window you'll run everything inside. It's free. Go to
+      <code class="inline">code.visualstudio.com</code> and click <span class="text-em">Download</span> —
+      it detects your system.</p>
+      <div class="fork">
+        <div class="os"><div class="os-tag mac">Mac</div><div class="os-body">Open the downloaded <code class="inline">.zip</code>, then drag <span class="text-em">Visual Studio Code</span> into your <span class="text-em">Applications</span> folder. Open it from there (right-click → Open the first time if macOS warns you).</div></div>
+        <div class="os"><div class="os-tag win">Win</div><div class="os-body">Run the <code class="inline">.exe</code> (the "User Installer") and accept the defaults. If it offers <span class="text-em">"Add to PATH,"</span> tick it.</div></div>
+      </div>
+      <div class="check">
+        <span class="label">You'll know it worked when</span>
+        VS Code opens and you see the Welcome tab.
+      </div>
+    </section>
+
+    <!-- STEP 2 -->
+    <section class="step">
+      <div class="step-num">02<span class="bar">/</span><span class="what">install claude code</span></div>
+      <h3>Install Claude Code</h3>
+      <p>First open a terminal — you'll paste one line into it.</p>
+      <div class="fork">
+        <div class="os"><div class="os-tag mac">Mac</div><div class="os-body">Open the <span class="text-em">Terminal</span> app: press <code class="inline">⌘ Space</code>, type "Terminal," hit Enter.</div></div>
+        <div class="os"><div class="os-tag win">Win</div><div class="os-body">Open <span class="text-em">PowerShell</span>: Start menu, type "PowerShell," hit Enter. Your prompt starts with <code class="inline">PS C:\</code> — that's how you know it's PowerShell.</div></div>
+      </div>
+      <p>Paste the line for your system and press Enter. This is the official installer; it
+      sets up a self-contained Claude Code — <span class="text-em">you do not need to install
+      Node.js or anything else first.</span></p>
+      <div class="cmd">curl -fsSL https://claude.ai/install.sh | bash<span style="color:var(--text-faint)">   # Mac</span></div>
+      <div class="cmd plain"><span style="color:var(--accent)">PS&gt;</span> irm https://claude.ai/install.ps1 | iex<span style="color:var(--text-faint)">   # Windows PowerShell</span></div>
+      <div class="check">
+        <span class="label">You'll know it worked when</span>
+        <strong>Close the terminal and open a new one</strong> (the installer adds <code class="inline">claude</code>
+        to your PATH, which only takes effect in fresh terminals), then run
+        <code class="inline">claude --version</code> — a version number means you're set.
+      </div>
+      <div class="snag">
+        <b>Still "command not found" in a fresh terminal?</b> The installer couldn't wire up
+        your PATH (common on Mac). Run these two lines once — they tell your shell where
+        <code class="inline">claude</code> lives — then try <code class="inline">claude --version</code> again:
+        <div class="cmd plain" style="margin-top:10px"><span style="color:var(--accent)">$</span> echo 'export PATH="$HOME/.local/bin:$PATH"' &gt;&gt; ~/.zshrc
+<span style="color:var(--accent)">$</span> source ~/.zshrc</div>
+        <span style="display:block;margin-top:2px">(That's for the Mac default shell, zsh. On Linux/bash, use <code class="inline">~/.bashrc</code> in both lines.)</span>
+      </div>
+      <div class="snag">
+        <b>Prefer no terminal at all?</b> There's a Desktop app (Mac/Windows) with a normal
+        graphical interface — install that, sign in, open this repo's folder in it. The steps
+        are the same; "run <code class="inline">/teach-me</code>" just happens in its chat box.
+        <span style="display:block;margin-top:6px"><b>On Mac with Homebrew?</b> <code class="inline">brew install --cask claude-code</code> also works.</span>
+      </div>
+    </section>
+
+    <!-- STEP 3 -->
+    <section class="step">
+      <div class="step-num">03<span class="bar">/</span><span class="what">sign in</span></div>
+      <h3>Sign in to Claude</h3>
+      <p>Just run:</p>
+      <div class="cmd">claude</div>
+      <p>The first time, it opens a browser and walks you through signing in with your Claude
+      account (or pasting an API key, if that's what your lab gave you). It remembers you after
+      that.</p>
+      <div class="check">
+        <span class="label">You'll know it worked when</span>
+        You land at the Claude Code prompt — a <code class="inline">&gt;</code> waiting for
+        input — with no auth error. Type <code class="inline">/help</code> to confirm it
+        responds, then <code class="inline">/exit</code> to leave. You'll come back in
+        <em>inside the repo</em> in Step&nbsp;5.
+      </div>
+      <div class="snag">
+        <b>Sign-in rejected?</b> This is the one step that's about your account, not your
+        machine. A free Claude account won't work — you need Pro/Max, or the login your lab
+        gave you. Reinstalling won't help here.
+      </div>
+    </section>
+
+    <!-- STEP 4 -->
+    <section class="step">
+      <div class="step-num">04<span class="bar">/</span><span class="what">get the repo</span></div>
+      <h3>Download this repo and open it</h3>
+      <p>"Cloning" just means downloading the repo as a folder you can edit. You need
+      <span class="text-em">git</span> — check first:</p>
+      <div class="cmd">git --version</div>
+      <p>A version number means you have it. If not:</p>
+      <div class="fork">
+        <div class="os"><div class="os-tag mac">Mac</div><div class="os-body">Running <code class="inline">git --version</code> makes macOS offer to install the developer command-line tools — accept it.</div></div>
+        <div class="os"><div class="os-tag win">Win</div><div class="os-body">Install <span class="text-em">Git for Windows</span> from <code class="inline">git-scm.com/download/win</code> (defaults are fine), then open a fresh PowerShell.</div></div>
+      </div>
+      <p>Now clone it. Your home folder is a fine place:</p>
+      <div class="cmd plain"><span style="color:var(--accent)">$</span> cd ~
+<span style="color:var(--accent)">$</span> git clone https://github.com/xiuyechen/agent-craft-starter.git</div>
+      <p>Then open it in VS Code: <span class="text-em">File → Open Folder…</span> and select
+      <span class="text-em">agent-craft-starter</span>.</p>
+      <div class="check">
+        <span class="label">You'll know it worked when</span>
+        VS Code's left sidebar (the Explorer) lists the repo's files — <code class="inline">README.md</code>,
+        <code class="inline">HOMEWORK.md</code>, <code class="inline">curriculum/</code>,
+        <code class="inline">data/</code>, and so on.
+      </div>
+    </section>
+
+    <!-- STEP 5 — the centerpiece -->
+    <section class="step">
+      <div class="step-num">05<span class="bar">/</span><span class="what">run the tutor</span></div>
+      <h3>Open a terminal <em>inside the repo</em> — then run the tutor</h3>
+      <p><strong>This is the step beginners get wrong most often.</strong> Claude Code only
+      knows about this project if its terminal is opened <span class="text-em">inside this
+      folder</span>. The safe way: use VS Code's <span class="text-em">built-in</span> terminal,
+      because it opens in the folder you have open. Menu <span class="text-em">Terminal → New
+      Terminal</span> (or the shortcut <code class="inline">Ctrl + `</code> — that's the
+      backtick, top-left of the keyboard).</p>
+
+      <figure class="sketch">
+        <svg viewBox="0 0 720 400" role="img" aria-label="Sketch of the VS Code window: file explorer on the left with the repo folder open, an editor in the middle, and the integrated terminal panel along the bottom. An arrow highlights that the terminal's path must end in agent-craft-starter.">
+          <!-- window frame -->
+          <rect x="8" y="8" width="704" height="384" rx="10" fill="#16202C" stroke="#243240" stroke-width="1.5"/>
+          <!-- title bar -->
+          <rect x="8" y="8" width="704" height="30" rx="10" fill="#0A0F16"/>
+          <rect x="8" y="28" width="704" height="10" fill="#0A0F16"/>
+          <circle cx="28" cy="23" r="5" fill="#F2B5A0"/>
+          <circle cx="46" cy="23" r="5" fill="#5E6E7E"/>
+          <circle cx="64" cy="23" r="5" fill="#5E6E7E"/>
+          <text x="360" y="27" text-anchor="middle" fill="#5E6E7E" font-family="monospace" font-size="11">agent-craft-starter — Visual Studio Code</text>
+
+          <!-- activity bar -->
+          <rect x="8" y="38" width="36" height="354" fill="#0F1620"/>
+          <rect x="20" y="54" width="14" height="2.5" fill="#7DE0C2"/>
+          <rect x="20" y="60" width="14" height="2.5" fill="#7DE0C2"/>
+          <rect x="20" y="66" width="14" height="2.5" fill="#7DE0C2"/>
+
+          <!-- explorer / sidebar -->
+          <rect x="44" y="38" width="168" height="240" fill="#101a24"/>
+          <text x="58" y="62" fill="#94A3B2" font-family="monospace" font-size="10" letter-spacing="1">EXPLORER</text>
+          <text x="58" y="86" fill="#E8EDF2" font-family="monospace" font-size="11">▾ agent-craft-starter</text>
+          <text x="72" y="106" fill="#94A3B2" font-family="monospace" font-size="11">▸ curriculum</text>
+          <text x="72" y="124" fill="#94A3B2" font-family="monospace" font-size="11">▸ data</text>
+          <text x="72" y="142" fill="#7DE0C2" font-family="monospace" font-size="11">CLAUDE.md</text>
+          <text x="72" y="160" fill="#94A3B2" font-family="monospace" font-size="11">HOMEWORK.md</text>
+          <text x="72" y="178" fill="#94A3B2" font-family="monospace" font-size="11">README.md</text>
+
+          <!-- editor area -->
+          <rect x="212" y="38" width="500" height="240" fill="#0F1620"/>
+          <text x="230" y="64" fill="#5E6E7E" font-family="monospace" font-size="11">CLAUDE.md</text>
+          <line x1="230" y1="92" x2="560" y2="92" stroke="#243240" stroke-width="6" stroke-linecap="round"/>
+          <line x1="230" y1="112" x2="470" y2="112" stroke="#1B2530" stroke-width="6" stroke-linecap="round"/>
+          <line x1="230" y1="132" x2="600" y2="132" stroke="#1B2530" stroke-width="6" stroke-linecap="round"/>
+          <line x1="230" y1="152" x2="520" y2="152" stroke="#1B2530" stroke-width="6" stroke-linecap="round"/>
+
+          <!-- integrated terminal panel -->
+          <rect x="44" y="278" width="668" height="114" fill="#0A0F16"/>
+          <line x1="44" y1="278" x2="712" y2="278" stroke="#243240" stroke-width="1.5"/>
+          <text x="58" y="298" fill="#5E6E7E" font-family="monospace" font-size="9.5" letter-spacing="1.5">TERMINAL</text>
+          <!-- the all-important path line -->
+          <text x="58" y="324" font-family="monospace" font-size="12">
+            <tspan fill="#5E6E7E">~/</tspan><tspan fill="#7DE0C2" font-weight="bold">agent-craft-starter</tspan><tspan fill="#94A3B2"> $ </tspan><tspan fill="#E8EDF2">claude</tspan>
+          </text>
+          <text x="58" y="348" fill="#5E6E7E" font-family="monospace" font-size="12">&gt; <tspan fill="#94A3B2">_</tspan></text>
+
+          <!-- annotation arrow + label pointing at the path -->
+          <path d="M 470 318 C 540 308, 560 300, 590 300" fill="none" stroke="#F2B5A0" stroke-width="1.6"/>
+          <path d="M 470 318 l 10 -7 l -1 9 z" fill="#F2B5A0"/>
+          <rect x="540" y="332" width="166" height="50" rx="5" fill="#1a1410" stroke="#6E3A30" stroke-width="1"/>
+          <text x="552" y="352" fill="#F2B5A0" font-family="monospace" font-size="10.5">this path MUST end in</text>
+          <text x="552" y="368" fill="#F2B5A0" font-family="monospace" font-size="10.5" font-weight="bold">agent-craft-starter</text>
+        </svg>
+        <figcaption>The integrated terminal opens where your folder is. Check the path before you run anything.</figcaption>
+      </figure>
+
+      <p>Look at the path the terminal shows. <strong>It must end in</strong>
+      <code class="inline">agent-craft-starter</code>. If it doesn't, run
+      <code class="inline">cd ~/agent-craft-starter</code> to fix it. Then start Claude Code:</p>
+      <div class="cmd">claude</div>
+      <p>First, prove the context loaded — ask it, in plain English:</p>
+      <div class="cmd plain"><span style="color:var(--accent)">&gt;</span> what does this project do, and where does its data live?</div>
+      <div class="check">
+        <span class="label">You'll know it worked when</span>
+        It answers with <strong>specifics</strong> — a posterior parietal cortex decision task,
+        data in <code class="inline">data/</code>, an open question in
+        <code class="inline">notes.md</code>. It knows that only because the repo's
+        <code class="inline">CLAUDE.md</code> pointed it there. A vague "I'd need to look at the
+        files" means your terminal isn't inside the repo — check the path again.
+      </div>
+      <p>Now run the tutor:</p>
+      <div class="cmd prompt-slash">/teach-me</div>
+      <div class="snag">
+        <b>Nothing happens?</b> Type it in plain English instead:
+        <code class="inline">teach me the curriculum in this repo</code>.
+      </div>
+      <div class="check">
+        <span class="label">Done — this is the finish line</span>
+        The tutor greets you, offers the two tracks, and starts asking <em>you</em> questions.
+        That's setup complete. <strong>Now go do the homework.</strong>
+      </div>
+    </section>
+
+  </main>
+
+  <section class="trouble">
+    <h2>When something breaks</h2>
+    <p class="sub">// one honest try, then bring the exact error to the workshop</p>
+
+    <div class="tr-row">
+      <div class="tr-sym"><code>claude: command not found</code></div>
+      <div class="tr-fix">First, close <strong>every</strong> terminal and open a new one. Still broken on Mac? Your PATH wasn't set — run <code>echo 'export PATH="$HOME/.local/bin:$PATH"' &gt;&gt; ~/.zshrc</code> then <code>source ~/.zshrc</code> (see Step 2).</div>
+    </div>
+    <div class="tr-row">
+      <div class="tr-sym">Sign-in is rejected</div>
+      <div class="tr-fix">Account-side, not your machine. <strong>A free Claude account won't work</strong> — you need Pro/Max, or the login your lab gave you.</div>
+    </div>
+    <div class="tr-row">
+      <div class="tr-sym">Claude gives generic answers about the project</div>
+      <div class="tr-fix">Your terminal isn't inside the repo. Use VS Code's built-in terminal and confirm the path ends in <code>agent-craft-starter</code>.</div>
+    </div>
+    <div class="tr-row">
+      <div class="tr-sym"><code>/teach-me</code> does nothing</div>
+      <div class="tr-fix">Type "teach me the curriculum in this repo" in plain English instead.</div>
+    </div>
+    <div class="tr-row">
+      <div class="tr-sym"><code>git: command not found</code></div>
+      <div class="tr-fix">Install git (Step 4) — macOS offers it automatically; Windows gets it from git-scm.com.</div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="done">You're set up. The learning starts now.</div>
+    Every checkpoint you just hit was the same move: <em>check the world, don't assume the
+    command worked.</em> That's Principle 04 — you were already doing Agent Craft before the
+    tutor said a word. The full written version of this guide lives in
+    <code>SETUP.md</code>; the homework is in <code>HOMEWORK.md</code>.
+  </footer>
+
+</div>

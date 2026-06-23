@@ -29,6 +29,11 @@ mechanism in one sentence, and connect both to your own work.
 
 ## Setup (one time)
 
+**New to Claude Code or the terminal?** Follow the **[setup
+guide](https://xiuyechen.github.io/agent-craft-starter/setup-guide.html)** instead — same
+steps, but beginner-proof, forked for Mac/Windows, with a check after each one. The quick
+version:
+
 You need VS Code, git, and Claude Code.
 
 1. Install [VS Code](https://code.visualstudio.com/).

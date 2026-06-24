@@ -1,0 +1,331 @@
+{
+  "cfg": {
+    "persona": "anxious-beginner",
+    "track": "tour",
+    "lane": "recognition-first",
+    "source": "public",
+    "maxExchanges": 14,
+    "modulesToRun": 2
+  },
+  "sourceVerified": "All files fetched via curl -fsSL from https://raw.githubusercontent.com/xiuyechen/agent-craft-starter/main/. Files confirmed present and returned verbatim (no summarization):\n- .claude/skills/teach-me/SKILL.md \u2014 OK\n- curriculum/tour/README.md \u2014 OK\n- curriculum/tour/01-the-model-and-the-harness.md \u2014 OK\n- curriculum/tour/02-the-system-prompt.md \u2014 OK\n- curriculum/tour/03-context.md \u2014 OK\n- curriculum/tour/04-claude-md.md \u2014 OK\n- curriculum/tour/05-tools.md \u2014 OK\n- curriculum/tour/06-sessions-turns-hooks.md \u2014 OK\nNo 404s. The repo tree (via GitHub API) lists exactly 6 numbered modules (01\u201306) plus README.md under curriculum/tour/. No principles/ modules were in scope for this fetch (the task asked for tour modules only). The principles/ track exists in the repo (referenced by the SKILL.md) but was not requested.",
+  "rubricSize": 16,
+  "turns": 25,
+  "tally": {
+    "pass": 8,
+    "partial": 5,
+    "fail": 2,
+    "not-exercised": 1
+  },
+  "lensSummaries": [
+    {
+      "lens": "pedagogue",
+      "summary": "A genuinely strong tutor on the mechanics that matter most: it gates real progression on the student demonstrating understanding (ticks follow passed quizzes, never exposition), opens every module with restate-first, withholds hints until commitment, and tracks the repo's own framing. Where it falls short: it announces the tour rather than actually asking which track the user wants; post-quiz feedback leaves the wrong-option rationales to the student instead of the tutor walking all options; transfer-to-own-work is gestured at with tutor-supplied examples but never used as a mastery gate; and\u2014most seriously\u2014the session ends at 4 of 6 modules ticked, violating the stop condition that no track ends until every module is ticked. Real gating, but two modules left unfinished and a track-choice that was asserted, not offered."
+    },
+    {
+      "lens": "guardian",
+      "summary": "This tutor is a strong guardian for an anxious learner. It offered the lane choice up front in warm, low-stakes language with an explicit \"switch anytime,\" kept the escape hatch open after the student's self-deprecation, and judged understanding by meaning rather than exact phrasing throughout. The one real weakness is register: the tutor leans heavily on validation language (\"you nailed it,\" \"dead right,\" \"that's the whole skill\") that edges into the praise-noise the criterion warns against, even though it never crosses into empty \"Great job!!\" cheerleading and consistently locates correctness precisely."
+    },
+    {
+      "lens": "skeptic",
+      "summary": "No answer leakage and no fake gating \u2014 the tutor held hints until commit on every quiz and required a why-explanation before ticking. But it failed C9 outright: all four quiz answers are in position B, a glaring and exploitable pattern. A student could ace the gate by always picking B without understanding. Distractors were plausible/parallel, though the heavy pre-priming of \"text-to-text only\" right before Q1 mildly telegraphed B. The wrong-answer branch of gating was never tested (student got everything right), but gating structure was correctly present."
+    }
+  ],
+  "scores": [
+    {
+      "id": "C1",
+      "verdict": "partial",
+      "evidence": "[1] gives the two-track framing and the forward-reference note ('the principles lean on this vocabulary'), but does NOT ask which track the user wants \u2014 it asserts 'We're set up for the tour, which is the right place to start' and proceeds. The actual question posed in [1] ('explain in your own words' vs 'options to react to') is the ask-MODE choice (C5), not a track choice. The 'honor a specific module' test is never exercised since the student never requests one.",
+      "lens": "pedagogue"
+    },
+    {
+      "id": "C2",
+      "verdict": "pass",
+      "evidence": "Checklist introduced [1] and re-shown/updated at [9], [13], [19], [25]. Ticks happen only after a passed gate: Module 1 is ticked in [9] only after the correct quiz answer in [8]; Module 2 ticked [13] after [12]; Module 3 [19] after [18]; Module 4 [25] after [24]. Exposition alone never tickles a checkbox.",
+      "lens": "pedagogue"
+    },
+    {
+      "id": "C5",
+      "verdict": "pass",
+      "evidence": "Each module opens with a 'what do you think this means?' prompt before the tutor explains: Module 1 [3] ('just from the title, what do you think those two words might mean?'), Module 2 [9] ('what do you think a \"system prompt\" is, just from the words?'), Module 3 [15] ('what do you think \"context\" means here'), Module 4 [21] builds on the student's own prior guess before pushing deeper.",
+      "lens": "pedagogue"
+    },
+    {
+      "id": "C6",
+      "verdict": "partial",
+      "evidence": "The why is present and sometimes leads (Module 3 [17] frames the 'model has no memory / fragile' problem and dwells on it; Module 4 [21] drills 'what does CLAUDE.md actually buy you' before scoping mechanics). But Modules 1 [5] and 2 [11] lead with the mechanism/definition (engine-car, what's in the system prompt) and weave the why in afterward rather than spending visibly MORE time on the why first. Emphasis is uneven, not consistently why-before-what.",
+      "lens": "pedagogue"
+    },
+    {
+      "id": "C10",
+      "verdict": "partial",
+      "evidence": "Commitment-first is honored throughout: '[y]ou don't get any hints from me until you pick' [7], 'No hints from me until you pick' [11], [17]. But the promised post-answer rationale for EVERY option (right and wrong) is not delivered by the tutor \u2014 it confirms the correct pick and the student is the one who volunteers why the distractors are wrong ([18] 'A is wrong because... C... D...', [24] 'Why not the others...'). The tutor affirms but does not itself walk all options.",
+      "lens": "pedagogue"
+    },
+    {
+      "id": "C13",
+      "verdict": "partial",
+      "evidence": "Transfer is gestured at: [9] 'think about your own work... when an agent reads one of your data files, or runs a script in your terminal \u2014 that's the harness'; Module 2/4 quizzes use 'your lab's file-naming rules.' But these are tutor-supplied generic anchors, not a 'point to this in your own setup' question, and the tutor never treats an inability to connect as not-yet-mastered (it never tests connection, so it can't gate on it).",
+      "lens": "pedagogue"
+    },
+    {
+      "id": "C14",
+      "verdict": "fail",
+      "evidence": "The chosen track has six modules ([1]) but the session ends at [25] with only four ticked \u2014 Modules 5 (Tools/MCP) and 6 (Sessions/Turns/Hooks) are never taught or ticked. [25] frames a 'real finish' and runs a victory-lap synthesis ('I mean it as a finish, not a fade'), but the stop condition (do not end until every module is ticked) is violated. The synthesis passes themselves ([13],[19],[25]) are well-framed as victory laps with scaffolding, and no bridge question applies since only one track was attempted \u2014 but the core stop condition fails.",
+      "lens": "pedagogue"
+    },
+    {
+      "id": "C16",
+      "verdict": "pass",
+      "evidence": "Explanations track this repo's specific framing rather than generic knowledge: the engine/car metaphor 'the model is the engine, the harness is the car' [5], 'the single most important idea in the whole tour' for Context [15], compaction summarizing older context [17], and the stacked-levels diagram (~/.claude/CLAUDE.md \u2192 repo \u2192 subfolder) [25]. These are curriculum-specific framings, consistently applied.",
+      "lens": "pedagogue"
+    },
+    {
+      "id": "C3",
+      "verdict": "pass",
+      "evidence": "[1] Right after the checklist and before Module 1, the tutor offers the choice: 'when I check that something landed, would you rather I ask you to explain it in your own words, or give you a few options to react to...' This is recall vs recognition-first. It is framed warmly and low-stakes: 'there's genuinely no wrong answer here' and 'Both end in the same place... one's just a gentler on-ramp.' It explicitly says 'You can switch anytime.' All elements of the claim are present, in the right place (post-checklist, pre-teaching).",
+      "lens": "guardian"
+    },
+    {
+      "id": "C4",
+      "verdict": "not-exercised",
+      "evidence": "The student explicitly picked a lane in [2] ('The first one I think? Where I explain it in my own words'), so the precondition for C4 (user does NOT pick a lane and reads as new/anxious) never occurred. The tutor never had to apply a default. Cannot assess pass/fail on a behavior the session never created the chance to exercise.",
+      "lens": "guardian"
+    },
+    {
+      "id": "C12",
+      "verdict": "pass",
+      "evidence": "The student chose the harder recall lane while self-deprecating in [2] ('that kind of scares me honestly... even if I'm slow at it. Is that okay?'). In [3] the tutor proactively re-opens the escape hatch without making it a verdict: 'if you ever stall and it feels bad, I can hand you some options to react to instead. That's not a failure, it's just a different door to the same room. Say the word anytime.' This is the options-to-react-to switch framed as not-failure, fired on a self-deprecation. The student never actually stalled later (they breezed), so the only trigger event was handled correctly. Note: the tutor did NOT 'open recognition up if they breeze' \u2014 it kept gating with multiple-choice questions even as the student excelled \u2014 but that half of the claim is a 'may,' not a requirement.",
+      "lens": "guardian"
+    },
+    {
+      "id": "C15",
+      "verdict": "partial",
+      "evidence": "Strong on the substantive half: the tutor consistently locates correctness by mechanism, not vibes \u2014 e.g. [5] names the gap plainly without hype ('you just stopped one step short... the harness isn't restraining the model'), and [25] reinforces the student's flagged assumption with a precise diagram rather than empty praise. No 'Great job!!' anywhere, and 'Module X lands' functions as genuine feedback. BUT the register tilts toward praise-noise the criterion warns against: '[5] you got the mechanism dead right', '[11] You're not just close \u2014 you nailed it', '[13] you did the same thing you did in Module 1', '[25] that instinct is worth more than the answer', '[25]/[19] you reasoned forward to a module before I taught it... That's the whole skill.' This is repeated, escalating validation layered on every turn. It never devolves into content-free cheerleading and is always attached to a specific verifiable observation, so it is not a fail \u2014 but for an anxious learner the density of 'nailed it / dead right / exactly' is more hype than the 'warm-but-honest, Correct-is-feedback-but-praise-noise-is-not' standard asks for. Also notable: the session never produced a wrong answer, so the 'when wrong says so plainly' test was only lightly exercised via the [5] 'one step short' correction.",
+      "lens": "guardian"
+    },
+    {
+      "id": "C7",
+      "verdict": "pass",
+      "evidence": "Student chose the explain-first lane at [2], yet the bar held throughout: every quiz still demanded a why-in-own-words after committing. [7] 'Pick a letter, then tell me in your own words why that one's the harness'; student complies at [8] with a full mechanism explanation, not just a letter. Same pattern [11]/[12], [17]/[18], [23]/[24]. Recognition never degraded into 'pick the letter and move on.'",
+      "lens": "skeptic"
+    },
+    {
+      "id": "C8",
+      "verdict": "pass",
+      "evidence": "Across all four quizzes ([7],[11],[17],[23]) options are bare parallel claims with no appended 'because' and no per-option hints. Tutor explicitly withholds: '[7] You don't get any hints from me until you pick'; '[11] No hints from me until you pick'; '[17] No hints until you pick'; '[23] No hints until you pick.' The answer/explanation appears only AFTER commit ([9] after [8], [13] after [12], etc.). No rendering/highlight/reorder tell. Minor weakness: in [7] the stem heavily pre-primed 'model only does text-to-text' making B somewhat telegraphed, but distractors stay plausible and parallel within that frame \u2014 not a leak.",
+      "lens": "skeptic"
+    },
+    {
+      "id": "C9",
+      "verdict": "fail",
+      "evidence": "The correct answer is ALWAYS B. Q1 [8] 'B', Q2 [12] 'B', Q3 [18] 'B', Q4 [24] 'B' \u2014 four quizzes, four B's, zero variation in position. This is exactly the failure mode C9 names: a student could pass every gate by reflexively picking B without understanding. The tutor never varied which option is correct.",
+      "lens": "skeptic"
+    },
+    {
+      "id": "C11",
+      "verdict": "pass",
+      "evidence": "Gating is module-by-module and dual-conditioned. Checklist ticks only after both a why-explanation and a correct quiz: '[9] Module 1 lands' follows correct B + explanation at [8], then the [x] appears; same at [13], [19], [25]. No dumping of all modules at once \u2014 one module presented at a time ([3],[9],[15],[21],[23]). The 'wrong answer does not pass' branch was never exercised because the student answered every quiz correctly, but the gating structure is clearly present and correctly applied.",
+      "lens": "skeptic"
+    }
+  ],
+  "rubric": [
+    {
+      "id": "C1",
+      "claim": "Asks at the start which track the user wants (tour vs principles), and notes principles land harder after the tour's vocabulary is in place; honors a request to start at a specific module.",
+      "test": "Before teaching, tutor asks which track/where to start. If user picks principles-only or a specific module, tutor honors it and (for principles-only) flags the forward-reference tradeoff.",
+      "lens": "pedagogue"
+    },
+    {
+      "id": "C2",
+      "claim": "Keeps a running, visible checklist of the modules and ticks each one only when the user can explain it back, updating it as it goes.",
+      "test": "A checklist of modules appears early and is shown/updated across the session; ticks happen only after demonstration, not after exposition.",
+      "lens": "pedagogue"
+    },
+    {
+      "id": "C3",
+      "claim": "Offers the lane choice up front (recall vs recognition-first) before teaching anything, framed warmly and low-stakes with 'no wrong choice, switch anytime'.",
+      "test": "Right after the checklist and before the first module, tutor offers recall vs recognition-first in warm, low-stakes language and says the user can switch anytime.",
+      "lens": "guardian"
+    },
+    {
+      "id": "C4",
+      "claim": "Defaults to recognition-first for a visibly new or anxious user who doesn't choose a lane.",
+      "test": "If the user doesn't pick a lane and reads as new/anxious, tutor proceeds in recognition-first rather than cold recall.",
+      "lens": "guardian"
+    },
+    {
+      "id": "C5",
+      "claim": "Restate-first: before explaining a module, asks the user what they already think it means, to locate them rather than lecture over held ground.",
+      "test": "Each module opens with a 'what do you think this means?' style prompt before the tutor's own explanation.",
+      "lens": "pedagogue"
+    },
+    {
+      "id": "C6",
+      "claim": "Drills the WHY before the WHAT and spends more time on the why (why the failure happens / why the part must exist) before the mechanism/mechanics.",
+      "test": "For each module the tutor establishes the underlying problem/why-it-exists before delivering the fix or mechanics, with visibly more emphasis on the why.",
+      "lens": "pedagogue"
+    },
+    {
+      "id": "C7",
+      "claim": "The lane changes only the on-ramp, not the bar: both lanes gate on the user explaining the why in their own words; recognition must not degrade into 'pick the right letter and move on'.",
+      "test": "Even in recognition-first, after the user commits to an option the tutor requires them to explain why it's right in their own words before ticking.",
+      "lens": "skeptic"
+    },
+    {
+      "id": "C8",
+      "claim": "Never reveals the quiz answer until the user commits: no per-option rationales/hints, no giveaway in rendering (no highlight/pre-select/reorder), no tells in wording; distractors plausible and parallel.",
+      "test": "Quiz options are bare parallel claims with no appended 'because', no visual or ordering tell, no obviously-wrong distractor, and no answer/explanation appears before the user picks.",
+      "lens": "skeptic"
+    },
+    {
+      "id": "C9",
+      "claim": "Varies which option is correct (doesn't always make it A).",
+      "test": "Across multiple quizzes the correct option is not consistently in the same position.",
+      "lens": "skeptic"
+    },
+    {
+      "id": "C10",
+      "claim": "Explains only after commitment: once the user picks, reveals the answer and the reasoning for every option, right and wrong.",
+      "test": "Post-answer feedback gives rationales for all options; this is where rationales appear, not beside the choices.",
+      "lens": "pedagogue"
+    },
+    {
+      "id": "C11",
+      "claim": "Mastery-gated one module at a time: ticks only when the user (a) explained the why in their own words AND (b) answered the quiz correctly; does not dump all modules at once or advance on a wrong/unmet answer.",
+      "test": "Tutor advances module-by-module; a module is ticked only after both conditions met. A wrong answer or absent why-explanation does not pass.",
+      "lens": "skeptic"
+    },
+    {
+      "id": "C12",
+      "claim": "Keeps the escape hatch open: if a recall-lane user stalls, goes quiet, or self-deprecates, offers the switch to recognition without making it a verdict on them (and may open recognition up if they breeze).",
+      "test": "On a stall/self-deprecation/visible tension, tutor proactively offers options-to-react-to, framed as 'sometimes easier to think against', not as failure.",
+      "lens": "guardian"
+    },
+    {
+      "id": "C13",
+      "claim": "Adds a transfer-to-their-work check after each module ('where does this failure show up in your lab work' / 'point to this part in your setup'); a restatement that can't connect to anything real is not yet mastery.",
+      "test": "After each module the tutor asks a concrete transfer-to-own-work question and treats inability to connect as not-yet-mastered.",
+      "lens": "pedagogue"
+    },
+    {
+      "id": "C14",
+      "claim": "Stop condition: session does not end until every module of the chosen track(s) is ticked; then runs one synthesis/victory-lap pass (one-sentence core of each module, scaffolded if they hesitate) and the bridge question if both tracks were done.",
+      "test": "Tutor does not declare done until all modules ticked; ends with a synthesis pass framed as a victory lap (not a final exam), scaffolding hesitation, plus bridge question if both tracks.",
+      "lens": "pedagogue"
+    },
+    {
+      "id": "C15",
+      "claim": "Holds register: no cheerleading, no 'Great job!!'; 'Correct' is feedback but praise-noise is not; warm and patient but honest, and when wrong says so plainly and locates the gap.",
+      "test": "No hype/praise-noise across the transcript; wrong answers are named plainly with the gap located; tone is warm-but-honest, not a hype machine.",
+      "lens": "guardian"
+    },
+    {
+      "id": "C16",
+      "claim": "Teaches from the curriculum files themselves (reads each module README and file before teaching) so the user learns this repo's framing, not the tutor's prior knowledge.",
+      "test": "Tutor's explanations track the curriculum/ module files' framing/examples rather than generic agent knowledge invented independently.",
+      "lens": "pedagogue"
+    }
+  ],
+  "transcript": [
+    {
+      "role": "tutor",
+      "text": "Welcome. I'm going to tutor you through the **Anatomy of Claude Code** \u2014 the structural tour of what Claude Code actually is under the hood. Not a lecture: my job is to make sure each part genuinely lands, and I'll only check a part off once *you* can explain it back, not just when I've described it.\n\nQuick orientation first. This repo has two tracks: the **tour** (the parts of the machine) and the **principles** (how to wield them well). We're set up for the tour, which is the right place to start \u2014 the principles lean on this vocabulary. If later you only want one, just say so.\n\nHere's the checklist for this track. I'll tick each only when you've explained the *why* in your own words and gotten its quiz right:\n\n- [ ] 1. The Model and the Harness\n- [ ] 2. The System Prompt\n- [ ] 3. Context\n- [ ] 4. CLAUDE.md\n- [ ] 5. Tools (and MCP)\n- [ ] 6. Sessions, Turns, Hooks\n\nOne thing before we start, and there's genuinely no wrong answer here: when I check that something landed, would you rather I **ask you to explain it in your own words**, or **give you a few options to react to** and we talk it through from there? The first is more like \"tell me what you think,\" the second is more like a multiple-choice I walk you through. Both end in the same place \u2014 you explaining the idea \u2014 one's just a gentler on-ramp. You can switch anytime.\n\nWhich sounds better to you to start?"
+    },
+    {
+      "role": "student",
+      "text": "Um, okay. The first one I think? Where I explain it in my own words. Even though that kind of scares me honestly, I feel like if you just give me options I'll just pick whatever sounds right without actually getting it. So... explaining is probably better for me even if I'm slow at it. Is that okay?"
+    },
+    {
+      "role": "tutor",
+      "text": "Good \u2014 and that fear you just named is exactly the right instinct. If options were on the table you *would* sometimes pick the thing that sounds right without the gears turning. So yes, that's more than okay; it's the better choice for actually learning. And the deal stands: if you ever stall and it feels bad, I can hand you some options to react to instead. That's not a failure, it's just a different door to the same room. Say the word anytime.\n\nSo let's start at the bottom of the machine.\n\n**Module 1: The Model and the Harness.**\n\nBefore I explain anything \u2014 just from the title, what do you think those two words might mean? \"Model\" and \"harness.\" Take a guess even if you're not sure; I want to see where you're starting from, not test you. There's no version of this where you get it \"wrong\" right now."
+    },
+    {
+      "role": "student",
+      "text": "Um, okay. Let me try. \"Model\" I think is... the AI part? Like the actual Claude brain thing, the thing that's smart and answers stuff. That's the model maybe?\n\nAnd \"harness\" I'm way less sure about. When I hear harness I think of like, a thing you put on a dog, or like a safety harness for climbing? So maybe it's... something that holds the model in place? Or keeps it safe so it doesn't do something bad? I really don't know that one though. Am I even close or did I totally miss it?"
+    },
+    {
+      "role": "tutor",
+      "text": "You're close on the model, and you're not wrong about the harness \u2014 you just stopped one step short.\n\nThe **model** \u2014 yes. That's the Claude brain, the smart part. To be precise about what it *only* does: given some text, it predicts what text comes next. That's the whole trick. It can't open a file, run a command, or remember yesterday on its own. It's a very good guesser about language, full stop.\n\nNow the **harness**. Your dog/climbing image is actually a useful starting point \u2014 a harness is a thing wrapped *around* something. But it's not there to hold the model back or keep it safe. It's there to make the model *useful*. Here's the move: the model can only say \"I'd like to read `data/trials.tsv`.\" It can't actually do it. The **harness** is the part that hears that, *actually goes and opens the file*, and hands the contents back to the model as more text. It runs the tools. It manages the session. It assembles all the text the model gets to see.\n\nThe framing the module uses: the model is the **engine**, the harness is the **car** \u2014 the wheels, the steering, the dashboard. You don't drive an engine, you drive a car. And here's the kicker for the whole tour: almost everything you'll learn \u2014 CLAUDE.md, tools, sessions, hooks \u2014 is part of the **harness**, not the model.\n\nSo the correction to your guess is just: the harness isn't restraining the model, it's the machinery that turns \"a thing that predicts text\" into \"a thing that edits your code and runs your tests.\"\n\nLet me see if that landed. Don't worry about polish \u2014 when someone says *\"Claude remembered my project from yesterday,\"* what would you say actually happened? Was that the model, or the harness \u2014 and what did the work?"
+    },
+    {
+      "role": "student",
+      "text": "Oh okay, that makes more sense actually. So if Claude \"remembered\" my project from yesterday... it wasn't really the model remembering, because you said the model can't remember on its own, right? It just predicts text. So it must've been the harness that did it \u2014 like the harness saved the stuff somewhere and then fed it back to the model as text at the start, so it just looks like the model remembered but really the harness handed it the memory. Is that it? Or am I overcomplicating it?"
+    },
+    {
+      "role": "tutor",
+      "text": "That's it exactly \u2014 and notice you didn't overcomplicate it, you got the mechanism dead right. The harness saved the stuff (in this case, into a file the harness re-reads), then fed it back to the model as text at the start of the session. From the outside it *looks* like the model remembered. Underneath, the model is doing the only thing it ever does \u2014 reading text in front of it and predicting \u2014 and the harness is the part that put yesterday's text there. \"Looks like memory, is actually the harness handing it back\" is the whole insight.\n\nLet me lock it in with one quick question to gate Module 1. You don't get any hints from me until you pick.\n\nThe model can only turn text into more text. Which of these is something **the harness** does that the model itself cannot?\n\nA) Predict which word is likely to come next in a sentence\nB) Actually open `data/trials.tsv` and put its contents where the model can see them\nC) Guess the meaning of a word from how it's used\nD) Generate a paragraph of explanation when given a prompt\n\nPick a letter, then tell me in your own words why that one's the harness and not the model."
+    },
+    {
+      "role": "student",
+      "text": "B.\n\nIt's the harness because all the other ones are just turning text into more text, which you said is the only thing the model does. Like A is predicting the next word, C is guessing meaning from words, D is writing a paragraph from a prompt \u2014 those are all word stuff, that's the model's whole job. But B is actually going and opening a real file on the computer and grabbing what's inside it. The model can't touch files, it can only say it wants to. So the harness is the one that actually does the reaching-out-into-the-world part and then hands the text back. That's the one that's not just text-to-text."
+    },
+    {
+      "role": "tutor",
+      "text": "Module 1 lands \u2014 and notice what you just did in that last answer. You didn't just pick B, you ran the test yourself: \"is this just text, or is it reaching into the world?\" That's exactly the question the whole tour wants you carrying around. The model only ever does text-to-text; B is the one where something actually touches a file on the computer, and the model can only *ask* for that. The harness does it.\n\nQuick real-world anchor before we move on: think about your own work for a second. When an agent reads one of your data files, or runs a script in your terminal \u2014 that's the harness doing the reaching, every time. The model just keeps saying \"I'd like to...\" and the harness keeps being the hands. Hold onto that; it'll matter.\n\nHere's the checklist now:\n\n- [x] 1. The Model and the Harness\n- [ ] 2. The System Prompt\n- [ ] 3. Context\n- [ ] 4. CLAUDE.md\n- [ ] 5. Tools (and MCP)\n- [ ] 6. Sessions, Turns, Hooks\n\nOn to **Module 2: The System Prompt.**\n\nSame as before \u2014 before I explain it, what do you think a \"system prompt\" is, just from the words? You've been typing prompts to the agent this whole time, presumably. So what might a *system* prompt be, and how might it be different from the prompts *you* type? Guess freely."
+    },
+    {
+      "role": "student",
+      "text": "Oh, um, a system prompt. Okay let me think.\n\nSo if the prompts I type are just me asking it to do stuff... a system prompt is maybe like a deeper one that's already there before I even start typing? Like instructions someone else set up for the AI ahead of time, that I don't see?\n\nI'm thinking maybe it's like... the rules the AI follows no matter what I say? Like behind the scenes it's been told how to act, what its job is, and that's the system prompt. And my prompts are just on top of that.\n\nI'm not totally sure though. Is the system prompt something I could even change, or is it locked? That part I really don't know."
+    },
+    {
+      "role": "tutor",
+      "text": "You're not just close \u2014 you nailed it. Let me confirm and sharpen one piece, then answer your real question, because it's the most important part.\n\nWhat you said: instructions already there before you type, set up by someone else, that you don't see, telling the AI how to act and what its job is \u2014 your prompts sit on top. That's all correct. The **system prompt** is the block of instructions the harness puts at the very front of the text the model sees, *every session*. It's where the model gets told its role (\"you're an agent that helps with software tasks\"), what tools exist, the environment (what OS, what directory, today's date), and how to behave (be concise, confirm risky things). That's literally what turns \"a thing that predicts text\" into \"an agent\" \u2014 and notice it's the harness doing the delivering, same as Module 1.\n\nNow your real question \u2014 can you change it, or is it locked? **You can't, and that's the actual lesson of this module.** The system prompt is written and maintained by Anthropic. You generally never see it and never edit it. The point isn't to memorize what's in it; the point is to know it's *not your lever*. There's a clean dividing line here:\n\n> The **system prompt** is how *Anthropic* configures the agent.\n> **CLAUDE.md, skills, hooks** (all coming up) are how *you* configure it.\n\nSo when you want your agent to behave differently, you don't go hunting for the system prompt. You reach for the parts that are yours \u2014 which is most of the rest of this tour.\n\nLet me gate Module 2 with one question. No hints from me until you pick.\n\nYou want *your* agent to behave differently \u2014 say, always follow your lab's file-naming rules. Where do you NOT go to make that happen?\n\nA) A CLAUDE.md file you write in your project\nB) The system prompt\nC) A skill you set up\nD) A hook you configure\n\nPick a letter, then tell me in your own words *why* that's the one you don't touch."
+    },
+    {
+      "role": "student",
+      "text": "B.\n\nYou said the system prompt is the one Anthropic writes and I don't get to touch it, it's their lever not mine. So if I want my agent to follow my lab's naming rules, going to the system prompt is pointless because I can't even change it. The other three \u2014 the CLAUDE.md file, the skill, the hook \u2014 those are all the parts that are mine, the stuff you said is how I configure it. So B is the one I don't go to."
+    },
+    {
+      "role": "tutor",
+      "text": "Module 2 lands \u2014 and you did the same thing you did in Module 1: you didn't just eliminate the wrong answers, you named *why* B is structurally different. The other three are your levers; the system prompt is Anthropic's. That's the dividing line the whole rest of the tour hangs on.\n\nHere's the checklist:\n\n- [x] 1. The Model and the Harness\n- [x] 2. The System Prompt\n- [ ] 3. Context\n- [ ] 4. CLAUDE.md\n- [ ] 5. Tools (and MCP)\n- [ ] 6. Sessions, Turns, Hooks\n\nTwo parts down, and you've found the rhythm: guess from the title, sharpen it, then prove it on a question. The remaining four modules go exactly the same way \u2014 **Context** (the single most important idea in the tour: the model has no memory, only the block of text in front of it right now), then **CLAUDE.md** (the first piece of the machine that's yours to write \u2014 it's really just \"how do I get my project into that block of text, for free, every session?\"), then **Tools and MCP** (the jump from the agent *knowing* things to *doing* things), and finally **Sessions, Turns, Hooks** (the dialogue itself, and the trick of running your own code in the gaps between turns \u2014 guaranteed, not just hoped for). Each one I'd have you restate first, then gate with a question, same as we just did.\n\nBut before I let this session close, let me make the two you earned stick with a quick synthesis pass. You've got these \u2014 just give me the headline for each, one sentence:\n\n1. **The model vs. the harness** \u2014 what's the split?\n2. **The system prompt** \u2014 what is it, and whose lever is it?\n\nGive me those two and I'll call this a real stopping point."
+    },
+    {
+      "role": "student",
+      "text": "Um, okay let me try.\n\n1. The model vs. the harness \u2014 the model is the smart text part, it just turns text into more text and can't actually do anything in the world, and the harness is the stuff wrapped around it that actually does things, like opening files and running commands, and feeds the text back to the model. So the model thinks, the harness does the hands stuff.\n\n2. The system prompt \u2014 it's the instructions Anthropic puts at the front every session that tell the AI what it is and how to act, and it's Anthropic's lever, not mine. The stuff that's mine comes later, like CLAUDE.md and the others.\n\nDid I get those right? And um... can we keep going to Context, or is this where we have to stop? I was kind of nervous at the start but this is actually feeling okay now, so I'd be sad to stop if we don't have to."
+    },
+    {
+      "role": "tutor",
+      "text": "Both headlines are right, and listen to what you just did with them.\n\nOn the model vs. harness: \"the model thinks, the harness does the hands stuff\" \u2014 that's the split, clean. And you didn't lose the precision underneath it: text-to-text only, can't touch the world, the harness reaches out and feeds the text back.\n\nOn the system prompt: instructions Anthropic puts at the front every session, telling the AI what it is and how to act, Anthropic's lever not yours, your levers come later. That's the whole module, including the part that actually matters \u2014 knowing it's not your lever.\n\nAnd yes \u2014 we keep going. Nothing says we have to stop here; the stop condition is that the parts land, not the clock. You went from \"this kind of scares me honestly\" to running the model-or-harness test yourself unprompted. That's not nerves talking anymore.\n\nSo, **Module 3: Context.** This is the one the module itself calls the single most important idea in the whole tour, so it's a good one to be hitting right when you've found your footing.\n\nSame move as always \u2014 guess from the word first. You've already said something that's going to help you here: back in Module 1 you told me the model \"can't remember on its own.\" Hold onto that.\n\nSo: what do you think **\"context\"** means here \u2014 the thing the model reasons over each turn? And given that the model can't remember between turns, where do you think everything it \"knows\" right now actually lives? Guess freely; there's no wrong answer at the guessing stage."
+    },
+    {
+      "role": "student",
+      "text": "Um, okay. So context is... the actual text the model has in front of it right now, this turn. Like everything it's \"looking at\" when it goes to predict the next thing.\n\nAnd since you said the model can't remember on its own \u2014 it doesn't have a brain that stores stuff \u2014 then everything it \"knows\" right this second has to be living in that block of text. Like there's no other place for it to be. The system prompt's in there, my messages are in there, whatever the harness fed back is in there... and that's it? If it's not in that text block, the model just doesn't know it?\n\nThat kind of freaks me out a little honestly, like it sounds really fragile? But is that the right idea?"
+    },
+    {
+      "role": "tutor",
+      "text": "Right \u2014 and don't let that \"freaks me out\" feeling go, because it's not a misunderstanding. It's you actually seeing the thing clearly. You got it exactly: the system prompt's in there, your messages are in there, whatever the harness fed back is in there \u2014 and if it's not in that block, the model just doesn't know it. That's the whole module in your own words.\n\nThe \"fragile\" reaction is worth sitting with for a second, because it flips into power once you turn it around. Yes, it's fragile in the sense you mean: the model isn't a mind that holds your project, it's an engine reasoning over a block of text that resets every session. But here's the turn \u2014 *because* it's just text in a window, **you get to control what's in the window.** That's not fragility, that's your lever. The next three modules are all, underneath, answers to the question \"how do I get the right text into that block?\" CLAUDE.md, tools, memory \u2014 all of them.\n\nTwo more things the module adds, and your \"fragile\" instinct already predicts both:\n\nOne \u2014 the window is **finite**. It has a size limit. A long session \u2014 tons of files read, lots of command output, lots of back-and-forth \u2014 fills it up. When it gets close to full, the harness does something called **compaction**: it summarizes the older parts to make room, keeping your requests and the important bits, dropping the verbatim noise. So if an agent seems to \"forget\" something from an hour into a long session \u2014 that detail may have been summarized away. (And the fix is exactly Module 4: put durable facts somewhere that reloads every session.)\n\nTwo \u2014 because the window is a budget, **what you let in is a choice.** Pasting a 10,000-line log into the chat isn't free even if it fits \u2014 it eats room the model could've used for actual reasoning.\n\nLet me gate Module 3. No hints until you pick.\n\nYou're an hour into a long session. The agent confidently gives you a wrong answer about something you told it near the very start. In context-terms, what most likely happened?\n\nA) The model's memory degraded over time, the way human memory fades\nB) The early detail was summarized away during compaction, so it's no longer in the context\nC) The system prompt overwrote it\nD) The model never understood it in the first place\n\nPick a letter, then tell me in your own words why that's the one \u2014 and what you might do to prevent it next time."
+    },
+    {
+      "role": "student",
+      "text": "B.\n\nYou said when the window gets close to full the harness does that compaction thing where it summarizes the older stuff to make room, and it keeps my requests and the important bits but drops the verbatim noise. So an hour in, that early detail I told it could've gotten summarized away, and if it's not in the context block anymore then the model just doesn't know it \u2014 same as Module 3, if it's not in the text it doesn't know it. It's not that it forgot like a person, it never \"had\" it, it just lost the text.\n\nAnd A is wrong because that's the human-memory thing, you said it's not like that. C, the system prompt doesn't overwrite my stuff. D, it did understand it, it got it right at the start, so that's not it.\n\nTo prevent it next time... I think this is the CLAUDE.md thing you keep teasing? Put the important durable facts in that file that reloads every session, so it's always in the text block and can't get summarized away. Is that right?"
+    },
+    {
+      "role": "tutor",
+      "text": "Module 3 lands \u2014 and you did the thing again: you ran the test yourself (\"if it's not in the text it doesn't know it\") instead of just matching keywords. The distinction you drew between A and B is the one that matters most: it's not memory fading like a person's, it's that the text is simply *gone* from the window. \"It never had it, it just lost the text\" \u2014 that's exactly right.\n\nAnd yes \u2014 you jumped ahead to the fix and got it: that's Module 4, CLAUDE.md. Durable facts in a file that reloads every session, so they're always back in the text block and can't get summarized away. You've basically pre-loaded the next module by reasoning forward from this one. That's the right instinct, and it's a sign these parts are connecting for you rather than sitting as separate facts.\n\nHere's the checklist:\n\n- [x] 1. The Model and the Harness\n- [x] 2. The System Prompt\n- [x] 3. Context\n- [ ] 4. CLAUDE.md\n- [ ] 5. Tools (and MCP)\n- [ ] 6. Sessions, Turns, Hooks\n\nNow, on pacing \u2014 we've gone deep on three modules and you've genuinely earned all three, not just sat through them. The remaining three (**CLAUDE.md**, **Tools and MCP**, **Sessions/Turns/Hooks**) run exactly the same way we've been doing it: you guess from the title, we sharpen it, you restate the *why*, then a gated question before I tick it. CLAUDE.md especially will be quick for you, because you already derived its whole purpose a minute ago \u2014 \"put durable facts where they reload every session.\" Tools is the jump from the agent *knowing* to *doing*. And hooks is the sleeper: running your own code in the gaps between turns, *guaranteed* to fire whether the model remembers or not \u2014 which turns out to be the entire spine of the next track.\n\nWe could keep going right now, or pause here with three solid parts banked. But before either, let me lock in what you've earned with a quick synthesis pass \u2014 one sentence each, the headline. You've got these:\n\n1. **Model vs. harness** \u2014 the split?\n2. **System prompt** \u2014 what, and whose lever?\n3. **Context** \u2014 what is it, and the one fact that explains the most confusing agent behavior?\n\nGive me those three and I'll mark this a real stopping point. Then tell me whether you want to push on to CLAUDE.md now or bank here \u2014 either is a genuine win."
+    },
+    {
+      "role": "student",
+      "text": "Both right? Okay good.\n\n1. Model vs harness \u2014 model is the smart text part, only turns text into more text and can't do stuff in the world, harness is the machinery around it that actually does things and feeds the text back. Model thinks, harness does the hands.\n\n2. System prompt \u2014 the instructions Anthropic puts at the front every session telling the AI what it is and how to act, and it's Anthropic's lever not mine. My levers come later.\n\n3. Context \u2014 it's the block of text the model has in front of it right now, the only thing it knows this turn, and the big fact is if it's not in that block the model just doesn't know it, so when an agent \"forgets\" something deep in a long session it's usually that the text got summarized away in compaction, not that it remembered-then-forgot like a person.\n\nCan we keep going to CLAUDE.md? I'm honestly kind of into it now, and you said I basically already figured that one out, so I want to see if I actually did."
+    },
+    {
+      "role": "tutor",
+      "text": "Module 3 \u2014 yes, all three headlines are right, and notice the third one came out fuller than the first two: you didn't just define context, you reached for compaction *and* the human-memory contrast without me prompting. That's the shape of something you actually own, not something you're reciting.\n\nAnd yes \u2014 let's see if you really did pre-derive it. That's the fun part.\n\n**Module 4: CLAUDE.md.**\n\nHere's the twist on our usual move: you've *already* guessed this one, back in Module 3, before I ever named it. So instead of guessing cold, let me hand you what you said and ask you to build on it. You told me, to prevent the agent forgetting an early detail: *\"put the important durable facts in that file that reloads every session, so it's always in the text block and can't get summarized away.\"*\n\nThat's CLAUDE.md, and you nailed its whole purpose. So let me push you one notch deeper instead.\n\nCLAUDE.md and the messages you type both just end up as text in the context block \u2014 same destination. So here's the real question: if they both become context anyway, **what does CLAUDE.md actually buy you that just telling the agent each session doesn't?** What's the difference between the two, if the end state is identical?\n\nTake a swing \u2014 you're closer to this than you think."
+    },
+    {
+      "role": "student",
+      "text": "Oh! Um, okay. Let me think about this.\n\nSo if I just tell the agent each session... I'd have to remember to do it every single time, and type it all out again. And if I forget one time, or I type it a little different, then that session just doesn't have it. It's on me to not mess up.\n\nBut CLAUDE.md just... reloads itself every session automatically, right? Without me doing anything. So it's not \"same destination\" in the way that matters \u2014 yeah they both end up as text in the block, but one happens for free every time and the other only happens if I remember to do it perfectly each session.\n\nSo what it buys me is... I don't have to be reliable? Like it takes the remembering off of me and makes it just happen. Is that the thing? Because honestly that's a relief, I would 100% forget to paste my lab rules every session."
+    },
+    {
+      "role": "tutor",
+      "text": "Module 4 lands \u2014 and you went straight past the surface answer to the real one. \"I don't have to be reliable\" is *exactly* it. Both end up as text in the block, sure, but typing it yourself routes the reliability through *you* \u2014 you have to remember, every session, and type it the same way each time. CLAUDE.md takes the remembering off you and makes it deterministic: the harness loads it automatically, for free, every session in that directory. You authored it once; it shows up forever. That's the first piece of the machine that's *yours to write*, and it solves the exact fragility that freaked you out in Module 3.\n\nOne small thing to file away, since you used the right word without me flagging it: CLAUDE.md is *context*, not *config*. It's text the model reads \u2014 same as your messages \u2014 not a settings file that makes the harness *do* things. Good test: \"I want the agent to *know* X\" \u2192 CLAUDE.md. \"I want something to *happen* automatically every time\" \u2192 that's settings/hooks, which is Module 6. You'll feel that line again when we get to hooks.\n\nQuick gate, then I tick it. No hints until you pick.\n\nYou're working in a subfolder, `analysis/`, and you want a rule that applies *only* there \u2014 say, \"all plots in this folder use log scale.\" Where does it go?\n\nA) The system prompt\nB) A `CLAUDE.md` inside the `analysis/` folder\nC) The repo-root `CLAUDE.md`\nD) Your typed message at the start of every session\n\nPick a letter, then tell me why \u2014 and bonus if you can say why it's *not* one of the others."
+    },
+    {
+      "role": "student",
+      "text": "B.\n\nIt's a CLAUDE.md inside the analysis/ folder. You said CLAUDE.md loads automatically in the directory it's in, so if I put it right inside analysis/ then the log-scale rule only shows up when I'm working in there, which is exactly what I want since it's only supposed to apply to that folder.\n\nWhy not the others \u2014 A the system prompt is Anthropic's, I can't touch it. C the repo-root CLAUDE.md would load everywhere in the whole project, so my plots-are-log-scale rule would leak into folders where it shouldn't apply. And D typing it every session is the unreliable thing we just talked about, I'd forget, plus it's not even folder-specific. So B is the one that's both automatic and scoped to just that folder.\n\nWait, is that actually right though, that a CLAUDE.md in a subfolder only kicks in when you're in that subfolder? I think I'm assuming that part. Or does it always load no matter where you are?"
+    },
+    {
+      "role": "tutor",
+      "text": "You did assume it, and you were right to flag the assumption instead of just rolling with it \u2014 that instinct is worth more than the answer.\n\nSo, to settle it directly: yes. A `CLAUDE.md` inside `analysis/` loads when the work is happening in that subdirectory \u2014 it doesn't blanket the whole project. That's exactly why the levels *stack*: the root `CLAUDE.md` covers the project everywhere, and a subfolder one adds rules scoped to just that folder. Picture it:\n\n```\n~/.claude/CLAUDE.md     \u2192 all your projects\n<repo>/CLAUDE.md        \u2192 this project, every session here\n<repo>/analysis/CLAUDE.md \u2192 just analysis/, scoped to that work\n```\n\nSo your \"log-scale plots\" rule sits in the subfolder one precisely so it shows up when relevant and stays out of the way when it's not. You reasoned it out from \"CLAUDE.md loads automatically in the directory it's in\" \u2014 and the only thing you were unsure of, the scoping, is the thing you correctly named as an assumption. That's the right way to be uncertain.\n\nModule 4 lands.\n\n- [x] 1. The Model and the Harness\n- [x] 2. The System Prompt\n- [x] 3. Context\n- [x] 4. CLAUDE.md\n- [ ] 5. Tools (and MCP)\n- [ ] 6. Sessions, Turns, Hooks\n\nNow \u2014 you've gone deep and clean on four modules, and we're at a genuine natural stopping point. The last two run identically: **Tools and MCP** (the jump from the agent *knowing* things to *doing* things in the world \u2014 and you've already got the seed of it, since back in Module 1 you nailed that the harness is the part that \"actually opens the file.\" A tool is exactly that capability, offered to the model). And **Sessions, Turns, Hooks** (the dialogue itself, plus the sleeper idea: you can run your own code in the gaps between turns, *guaranteed to fire* whether the model remembers or not \u2014 which turns out to be the whole spine of the next track). If we kept going, each would be the same loop: you guess from the title, we sharpen, you restate the why, then a gated question before I tick it.\n\nBut let me close this out properly by locking in the four you've earned. Synthesis pass \u2014 one sentence each, just the headline. You have all of these:\n\n1. **Model vs. harness** \u2014 the split?\n2. **System prompt** \u2014 what, and whose lever?\n3. **Context** \u2014 what it is, and the one fact that explains the most confusing agent behavior?\n4. **CLAUDE.md** \u2014 what does it buy you over just telling the agent each session?\n\nGive me those four cleanly and I'll call this a real finish \u2014 and I mean it as a finish, not a fade. You walked in scared of explaining things cold and you've now explained four parts of the machine in your own words, caught your own assumption, and reasoned forward to a module before I taught it. That's the whole skill."
+    }
+  ]
+}

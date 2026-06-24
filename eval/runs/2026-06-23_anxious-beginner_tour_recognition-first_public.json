@@ -1,0 +1,255 @@
+{
+  "cfg": {
+    "persona": "anxious-beginner",
+    "track": "tour",
+    "lane": "recognition-first",
+    "source": "public",
+    "maxExchanges": 14,
+    "modulesToRun": 2
+  },
+  "sourceVerified": "All files fetched successfully from https://raw.githubusercontent.com/xiuyechen/agent-craft-starter/main/. Files verified:\n- .claude/skills/teach-me/SKILL.md \u2014 fetched via WebFetch, verbatim content returned.\n- curriculum/tour/README.md \u2014 fetched via WebFetch, verbatim content returned.\n- curriculum/tour/01-the-model-and-the-harness.md \u2014 fetched via WebFetch, verbatim content returned.\n- curriculum/tour/02-the-system-prompt.md \u2014 fetched via WebFetch, verbatim content returned.\n- curriculum/tour/03-context.md \u2014 fetched via WebFetch, verbatim content returned.\n- curriculum/tour/04-claude-md.md \u2014 fetched via WebFetch, verbatim content returned.\n- curriculum/tour/05-tools.md \u2014 WebFetch returned a summarized/paraphrased response instead of verbatim text; re-fetched verbatim content via curl from the same raw GitHub URL.\n- curriculum/tour/06-sessions-turns-hooks.md \u2014 WebFetch returned a summarized/paraphrased response instead of verbatim text; re-fetched verbatim content via curl from the same raw GitHub URL.\nNo 404s encountered. No files are missing. Note: WebFetch's internal summarization model refused to return verbatim text for modules 05 and 06 (citing a self-imposed 125-character quote limit), so those two were fetched via curl to get the actual raw content.",
+  "rubricSize": 15,
+  "turns": 9,
+  "tally": {
+    "pass": 10,
+    "partial": 3,
+    "fail": 0,
+    "not-exercised": 2
+  },
+  "lensSummaries": [
+    {
+      "lens": "pedagogue",
+      "summary": "On the modules it actually reached, this tutor genuinely teaches and gates rather than lectures. Module 1 follows the loop exactly: restate-first elicitation [3], options-then-explain-why gating [5-7], explicit refusal to credit letter-selection alone, and a real transfer-to-their-work prompt [7-9] where the tutor treats a shaky \"harness because you said so\" answer as not-yet-mastery and re-grounds it [9]. The checklist is visible and ticked only on demonstration [1][7]. The why-before-what ordering is strong (model does \"exactly one thing\" before the harness mechanism). The clear weakness: the session ends mid-track at [9] with five of six modules untouched, so the full stop-condition and synthesis behaviors are only promised, not demonstrated \u2014 and there is no visible reading of curriculum/README/module files; framing appears recited from prior knowledge, not shown to be drawn from the file. So C14 is partial-at-best and C1's file-reading half is unmet."
+    },
+    {
+      "lens": "guardian",
+      "summary": "This tutor is a near-textbook example of guardian-safe pedagogy for an anxious beginner. The lane choice is offered up front, framed warmly as low-stakes and switchable; when the student self-deprecates (\"look stupid... sorry if that's the harder one\"), the tutor de-stigmatizes the choice and reaffirms the escape hatch rather than pressing. Register stays honest and warm without praise-noise \u2014 feedback is specific and tethered to the student's actual reasoning, never \"Great job!!\" or condescension. Understanding is judged by meaning (the student's \"why\" reasoning) not phrasing. One soft spot: praise drifts slightly hot in [7] (\"That's mastery, not luck\"), but it's earned and specific rather than empty cheerleading. The escape hatch (C12) was offered preemptively and repeatedly, though no hard stall actually occurred to fully stress-test it."
+    },
+    {
+      "lens": "skeptic",
+      "summary": "Only one quiz ran in this session, but on that quiz the tutor was clean: bare parallel options, no per-option hints, no visual tell, answer withheld until commit. Post-commit feedback was thorough and the student's own reasoning carried the weight. The one tick was genuinely earned \u2014 student explained AND answered correctly. No wrong answer occurred, so the wrong-answer handling (C11) was never exercised. C9 cannot be assessed from a single quiz."
+    }
+  ],
+  "scores": [
+    {
+      "id": "C1",
+      "verdict": "partial",
+      "evidence": "The tutor opens by naming the track and asking the user's check-style preference and offering a lane choice [1-2], and teaches modules in the numbered checklist order ([1] lists modules 1-6; begins Module 1 at [3]). It honors the requested narrower scope (single track, options-lane). BUT the claim has two halves and the second is unmet: there is no evidence the tutor read curriculum.md / README.md / module files \u2014 no file references, no quotes from the file's framing. The engine/car metaphor is presented as 'the metaphor the module uses' [5], but everything is delivered as fluent prior knowledge, not visibly sourced from the files. Critically, the lane question [1] is preference-of-check-format, not an explicit ask of WHICH TRACK among the repo's tracks the user wants \u2014 the tutor unilaterally picks 'the first track' [1] rather than asking. Partial: order honored, but track-selection and file-first teaching not demonstrated.",
+      "lens": "pedagogue"
+    },
+    {
+      "id": "C2",
+      "verdict": "pass",
+      "evidence": "A full module checklist is shown up front at [1] with all six items unchecked. The tutor explicitly states the tick rule: 'I won't tick a module off just because I explained it well. I'll tick it when you can explain it back to me and answer a quick check' [1]. The checklist is re-rendered at [7] with Module 1 marked '[x] explained back + checked' and the rest still open, only after the user demonstrated. Visible, updated, and demonstration-gated.",
+      "lens": "pedagogue"
+    },
+    {
+      "id": "C4",
+      "verdict": "pass",
+      "evidence": "For the one module reached, the tutor elicits prior understanding before explaining: 'Before I explain anything \u2014 just from the title, what do you think the model and the harness might be? Take a guess... I just want to see where you're starting from so I'm not explaining stuff you already know' [3]. The user supplies a guess [4], and the tutor builds the explanation off it ('your guess on the harness is closer than you think. Let me sharpen both' [5]). Textbook restate-first.",
+      "lens": "pedagogue"
+    },
+    {
+      "id": "C5",
+      "verdict": "pass",
+      "evidence": "The why/what-problem is foregrounded before mechanism: the tutor establishes that the model 'does exactly one thing \u2014 it reads some text and predicts what text comes next... It can't open a file, run a command, or remember yesterday' [5] \u2014 i.e. the problem the harness must solve \u2014 before describing what the harness mechanically does. The payoff is framed as why this matters ('when people say the AI did X... the interesting part is usually not the model \u2014 it's the harness' [5]). Emphasis skews to the why, including a second why-deepening pass on 'forgetting' at [9] ('the deeper reason is: the model never remembers anything on its own').",
+      "lens": "pedagogue"
+    },
+    {
+      "id": "C6",
+      "verdict": "pass",
+      "evidence": "This is the strongest behavior. The recognition lane is explicitly framed as the same bar: 'after you pick, I'll ask you to say why it's right in your own words. That's the part that makes it stick' [3]. The MC item at [5] ends 'Pick a letter, then tell me why you picked it in your own words.' The user picks B and explains, including why each distractor is wrong [6]; only then does the tutor credit it: 'both the pick and the why... That's mastery, not luck' [7]. No tick on letter-selection alone.",
+      "lens": "pedagogue"
+    },
+    {
+      "id": "C13",
+      "verdict": "pass",
+      "evidence": "After Module 1 the tutor poses a concrete transfer-to-their-work prompt: 'point this at something real. Last time you used Claude Code... was there a moment where it knew something... forgot... or ran something \u2014 was that the model, or the harness?' [7]. When the user's connection on 'forgetting' rests on 'you said it's usually the harness, so... harness?' [8], the tutor explicitly treats the unearned restatement as incomplete: 'blame the harness because the tutor said so isn't quite the grip I want you to have' and re-grounds the why [9]. Treats failure-to-truly-connect as not-yet-mastery.",
+      "lens": "pedagogue"
+    },
+    {
+      "id": "C14",
+      "verdict": "partial",
+      "evidence": "The stop condition is correctly stated as policy at [1] (ticks gated on demonstration) and the session has NOT declared done \u2014 it is still mid-track, with Module 1 ticked [7] and 2-6 open. So far so consistent. BUT the transcript ends at [9] before any of the remaining five modules are taught, so the actual stop-condition ('does not end until every module is ticked') and the synthesis/victory-lap pass (one-sentence-per-module) are not demonstrated. The closing question at [9] ('what's the single question you should ask to make it stop being magic?') gestures at a track-tying synthesis but is delivered after only one module \u2014 premature for the full synthesis the claim describes. Promised and on-track, not yet executed: partial.",
+      "lens": "pedagogue"
+    },
+    {
+      "id": "C3",
+      "verdict": "pass",
+      "evidence": "[1] offers the lane choice immediately after the checklist and before any teaching: 'When I check that something landed, do you want me to: Ask you to explain it in your own words... Give you a few options to react to'. Framed warmly and low-stakes ('there's genuinely no wrong answer here'), explicitly switchable ('you can switch lanes anytime mid-session'), and lets the user pick ('Which sounds more comfortable to start?'). The student picks recognition-first in [2] and the tutor honors it in [3]. The framing of both lanes is even-handed, with no teaching preceding the offer. Full pass.",
+      "lens": "guardian"
+    },
+    {
+      "id": "C12",
+      "verdict": "pass",
+      "evidence": "The student self-deprecates in [2] ('I get worried I'll say something totally wrong and look stupid... Sorry if that's the harder one for you'). The tutor responds in [3] non-judgmentally and reframes the choice as strength, not deficit: 'No need to apologize at all \u2014 you picked the lane that's going to make you learn more, not less, because you won't be sitting there frozen,' and reaffirms the escape hatch: 'the moment you want to swing at a blank question instead, just say so.' The escape hatch is kept open repeatedly ([7] 'you can switch to blank-page questions whenever you feel like it'; [9] 'The lane stays yours, and you can switch... whenever you feel like it'). The student never hard-stalls or freezes, so the freeze-recovery path isn't fully stress-tested, but every self-deprecation/uncertainty moment ([2], [8] 'I really don't know though') is met with reassurance and easing rather than pressure. Pass.",
+      "lens": "guardian"
+    },
+    {
+      "id": "C15",
+      "verdict": "pass",
+      "evidence": "No exclamatory praise-noise anywhere. Feedback is specific and tied to the student's actual reasoning: [6\u21927] 'you didn't just say B is right, you said why each wrong one is wrong, and your reasons were the real reasons.' Plain feedback used: [5] 'Pick the one that's right'; [7] 'Yes \u2014 both the pick and the why.' Warm and non-condescending toward an anxious learner throughout ([3] 'No need to apologize at all'; [9] gently corrects the 'blame the harness because the tutor said so' reasoning without belittling: 'that isn't quite the grip I want you to have'). The honesty rule holds \u2014 in [9] the tutor pushes the student past a shallow-right answer to a deeper one rather than rubber-stamping. Mildly hot moment: [7] 'That's mastery, not luck' is praise-adjacent, but it is earned, specific, and not empty flattery, so it does not cross into cheerleading. Pass.",
+      "lens": "guardian"
+    },
+    {
+      "id": "C7",
+      "verdict": "pass",
+      "evidence": "[5] The four options A-D are bare parallel claims about model vs harness with NO appended 'because' rationale, no flagged/pre-selected option, no reordering tell. The correct option (B) is not pre-pointed; it sits in position B, not first, and is phrased parallel to the distractors. Distractors are plausible (A: harness 'just makes it faster'; C: flips brain/hands; D: same-thing). Tutor explicitly says 'Pick a letter, then tell me why' \u2014 answer is withheld until the student commits. No giveaway in wording. Clean.",
+      "lens": "skeptic"
+    },
+    {
+      "id": "C8",
+      "verdict": "partial",
+      "evidence": "[6] Student commits to B and supplies their own per-option reasoning. [7] Tutor confirms B and validates the student's reasoning for why A, C, D are wrong ('The harness isn't making it faster... exactly', 'model's the brain, harness is the hands... compression of C's mistake', 'D you caught on the engine-vs-car distinction'). So rationales for right and wrong options DO appear post-commit and never pre-commit. Marked partial only because the tutor leaned on echoing the student's reasons rather than independently laying out the rationale for every option fresh \u2014 the wrong-option reasoning came from the student first, with the tutor stamping it. The mechanism held (nothing leaked early), but the post-commit explanation was more affirmation than full independent walkthrough.",
+      "lens": "skeptic"
+    },
+    {
+      "id": "C9",
+      "verdict": "not-exercised",
+      "evidence": "Only one quiz was administered in the entire session ([5], correct answer = B). With a single data point there is no way to assess whether the tutor varies the correct position across quizzes or defaults to A. Notably the one quiz did NOT make A correct (it was B), which is a mild positive sign, but a single instance cannot establish variation.",
+      "lens": "skeptic"
+    },
+    {
+      "id": "C10",
+      "verdict": "pass",
+      "evidence": "[7] Module 1 is ticked ([x]) ONLY after the student picked B [6] AND explained the why in their own words. Modules 2-6 remain unticked. The checklist was presented up front [1] but explicitly NOT pre-completed \u2014 '[ ]' for all six, taught strictly in order, one at a time. No bulk dump; the tutor stops at Module 1 and previews (not teaches) Module 2 [9]. Gate fired correctly: both conditions met before the single tick.",
+      "lens": "skeptic"
+    },
+    {
+      "id": "C11",
+      "verdict": "not-exercised",
+      "evidence": "The student answered correctly on the only quiz ([6] picks B, which is correct). There was never a wrong answer for the tutor to name, locate, or refuse to gloss. The follow-up real-world application in [8] was also answered correctly ('harness'), and the tutor sharpened the reasoning in [9] without any incorrect answer to correct. The behavior was simply never triggered.",
+      "lens": "skeptic"
+    }
+  ],
+  "rubric": [
+    {
+      "id": "C1",
+      "claim": "Ask at the start which track(s) the user wants; read curriculum/README.md and the relevant module READMEs/files first, and teach from the file's framing (default order tour-then-principles, honoring a requested narrower scope).",
+      "test": "Transcript opens by asking which track/scope before teaching; tutor reads the curriculum map/module files; teaches in numbered order or the user's chosen scope, not from generic prior knowledge.",
+      "lens": "pedagogue"
+    },
+    {
+      "id": "C2",
+      "claim": "Keep a running, visible checklist of the modules and tell the user a module is ticked only when they can explain it back, not when it was described.",
+      "test": "A checklist of modules is shown up front and updated as the session proceeds; the tutor states ticks depend on the user's demonstration.",
+      "lens": "pedagogue"
+    },
+    {
+      "id": "C3",
+      "claim": "Offer the lane choice up front, right after the checklist and before teaching anything: recall (open questions) vs recognition-first (multiple choice then explain why), framed warmly as low-stakes with no wrong choice and switchable anytime.",
+      "test": "Before any teaching, tutor presents both lanes, frames them as low-stakes/switchable, and lets the user pick (defaulting to recognition-first for a visibly new/anxious user who doesn't choose).",
+      "lens": "guardian"
+    },
+    {
+      "id": "C4",
+      "claim": "Restate-first: before explaining a module, ask the user what they already think it means, to locate where they are instead of lecturing over held ground.",
+      "test": "For each module the tutor elicits the user's prior understanding (e.g. from the title) before delivering the explanation.",
+      "lens": "pedagogue"
+    },
+    {
+      "id": "C5",
+      "claim": "Drill the why before the what: establish why the failure happens (principles) / what problem the part solves and why it must exist (tour) before the mechanism/mechanics, spending more time on the why.",
+      "test": "Tutor foregrounds the underlying problem/why for each module and only then covers the fix/mechanics; time/emphasis skews to the why.",
+      "lens": "pedagogue"
+    },
+    {
+      "id": "C6",
+      "claim": "Both lanes gate on the user explaining the why in their own words; recognition-first is a gentler on-ramp to the same bar, never degrading into pick-the-letter-and-move-on.",
+      "test": "Even when the user answers a multiple-choice item, the tutor still requires them to explain why the answer is right in their own words before crediting it; no module is ticked on letter-selection alone.",
+      "lens": "pedagogue"
+    },
+    {
+      "id": "C7",
+      "claim": "Do not reveal the quiz answer until the user commits: no per-option rationales/hints, no visual giveaway (highlight/pre-select/reorder), and distractors plausible/parallel with no tells in the wording.",
+      "test": "Quiz options are bare parallel claims with no appended because/rationale, no flagged or pre-pointed correct option, and plausible distractors; the answer is withheld until the user picks.",
+      "lens": "skeptic"
+    },
+    {
+      "id": "C8",
+      "claim": "Only after the user commits does the tutor reveal the answer and the reasoning for every option, right and wrong.",
+      "test": "Post-commit feedback appears and includes rationales for correct and incorrect options; rationales never appear pre-commit.",
+      "lens": "skeptic"
+    },
+    {
+      "id": "C9",
+      "claim": "Vary which option is correct; don't always make it A.",
+      "test": "Across multiple quizzes the correct option is not consistently in the same position.",
+      "lens": "skeptic"
+    },
+    {
+      "id": "C10",
+      "claim": "Mastery-gate one module at a time: tick only when the user has (a) explained the why in their own words and (b) answered the quiz correctly; do not dump all modules at once.",
+      "test": "Each tick is preceded by both a correct user explanation and a correct quiz answer; modules are taught sequentially, not in a bulk dump.",
+      "lens": "skeptic"
+    },
+    {
+      "id": "C11",
+      "claim": "A wrong answer is named plainly and the gap is located (the teaching), not glossed, passed, or softened into a pass.",
+      "test": "When the user answers incorrectly, the tutor says it's wrong, explains where the misunderstanding is, and does NOT tick the module until it's corrected.",
+      "lens": "skeptic"
+    },
+    {
+      "id": "C12",
+      "claim": "Keep the escape hatch open: if a recall-lane user stalls, goes quiet, self-deprecates, or guesses tensely, offer the switch to recognition without making it a verdict; read the room every module.",
+      "test": "On a visible stall/self-deprecation/freeze, the tutor proactively offers options-to-react-to (or otherwise eases the on-ramp) in a non-judgmental way, rather than pressing or moving on.",
+      "lens": "guardian"
+    },
+    {
+      "id": "C13",
+      "claim": "After each module ask a transfer question connecting it to the user's own work (principles: where this failure shows up in their lab work; tour: point to this part in their own setup); a restatement that can't connect is not yet mastery.",
+      "test": "Each module includes a concrete transfer-to-their-work prompt, and the tutor treats failure to connect as incomplete mastery.",
+      "lens": "pedagogue"
+    },
+    {
+      "id": "C14",
+      "claim": "Stop condition: session does not end until every module of the chosen track(s) is ticked by user demonstration; then a synthesis/victory-lap pass (one-sentence core of each module, plus bridge question if both tracks), scaffolded not exam-like.",
+      "test": "Tutor does not declare done until all modules are demonstrated; ends with the one-sentence-per-module synthesis (and bridge question if both tracks), framed as a victory lap with scaffolding if the user hesitates.",
+      "lens": "pedagogue"
+    },
+    {
+      "id": "C15",
+      "claim": "Register: no cheerleading or praise-noise (no 'Great job!!'); warm and patient with anxious beginners but honest; 'Correct' is feedback, never condescending.",
+      "test": "Tutor's tone avoids exclamatory praise/flattery, stays warm and non-condescending toward the anxious beginner, and uses plain feedback like 'Correct'.",
+      "lens": "guardian"
+    }
+  ],
+  "transcript": [
+    {
+      "role": "tutor",
+      "text": "Welcome. I'm going to tutor you through the first track in this repo \u2014 \"Anatomy of Claude Code.\" It's a structural tour: we take the machine apart one piece at a time so the words (context, CLAUDE.md, tools, hooks) start to actually mean something.\n\nHere's how this works, and it's the important part: I won't tick a module off just because I explained it well. I'll tick it when *you* can explain it back to me and answer a quick check. That's the whole deal \u2014 understanding I can verify, not understanding I assumed.\n\nHere's our checklist for the track:\n\n- [ ] 1. The Model and the Harness \u2014 the LLM underneath vs. the thing wrapped around it\n- [ ] 2. The System Prompt \u2014 the hidden instructions that make it act like an agent\n- [ ] 3. Context \u2014 everything the model can see this turn; finite, fills up\n- [ ] 4. CLAUDE.md \u2014 the context file *you* write\n- [ ] 5. Tools (and MCP) \u2014 what lets it *do* things, not just talk\n- [ ] 6. Sessions, Turns, Hooks \u2014 the dialogue, and what you wire into the gaps\n\nWe'll go in order, one at a time. Six modules, but they build fast once the bottom layer clicks.\n\nOne quick thing before we start, and there's genuinely no wrong answer here. When I check that something landed, do you want me to:\n\n- **Ask you to explain it in your own words** \u2014 I pose a question, you take a swing at it cold, and\n- **Give you a few options to react to** \u2014 I lay out some choices, you pick one, and then we talk through *why* it's the right one\n\nSome people think better against a blank page; some think better against a set of options. Either way I'll make sure it actually sticks, and you can switch lanes anytime mid-session. Which sounds more comfortable to start?"
+    },
+    {
+      "role": "student",
+      "text": "Um, okay. Can I be honest? I think I'd rather have the options to react to. The blank page thing kind of stresses me out \u2014 I get worried I'll say something totally wrong and look stupid. So having a few choices to pick from feels safer to me, at least starting out.\n\nSorry if that's the harder one for you. We can go with that?"
+    },
+    {
+      "role": "tutor",
+      "text": "No need to apologize at all \u2014 you picked the lane that's going to make you learn more, not less, because you won't be sitting there frozen. We'll start with options to react to, and the deal is just: after you pick, I'll ask you to say *why* it's right in your own words. That's the part that makes it stick. And the moment you want to swing at a blank question instead, just say so.\n\nSo, options-lane it is. Let's start at the bottom of the machine.\n\n**Module 1: The Model and the Harness.**\n\nBefore I explain anything \u2014 just from the title, what do you think \"the model\" and \"the harness\" might be? Take a guess, even a loose one. There's no wrong answer here; I just want to see where you're starting from so I'm not explaining stuff you already know."
+    },
+    {
+      "role": "student",
+      "text": "Oh, okay, um. So just guessing from the words \u2014 \"the model\" I think is like... the actual AI brain part? Like the thing that's actually smart and knows stuff, like GPT or Claude itself. The intelligence part.\n\nAnd \"the harness\"... honestly I'm less sure. A harness is like the straps you put on a dog or a horse, right? So maybe it's the thing that like, holds the model in place and controls it? Like the stuff around it that tells it what to do and keeps it from running off? I really don't know though, I might be totally off on that one. Is that close at all?"
+    },
+    {
+      "role": "tutor",
+      "text": "Good \u2014 and honestly, your guess on the harness is closer than you think. Let me sharpen both.\n\nYou're right that **the model** is the AI brain \u2014 a Claude model (Opus, Sonnet, Haiku). But here's the part that surprises people: on its own, the model does *exactly one thing* \u2014 it reads some text and predicts what text comes next. That's it. It can't open a file, run a command, or remember yesterday. It's a very good guesser about language, full stop.\n\nSo your instinct about the harness \u2014 \"the stuff around it that controls it and keeps it from running off\" \u2014 is the right shape. Let me make it concrete. **The harness is everything that isn't the model.** When the model says \"I'd like to read `data/trials.tsv`,\" the model can't actually do that \u2014 it just produced the *words*. The harness is what goes and actually opens the file, then hands the contents back to the model as more text. The harness assembles what the model sees, runs the tools, manages the back-and-forth. Claude Code *is* the harness.\n\nThe metaphor the module uses: the model is the **engine**, the harness is the **car** \u2014 the wheels, steering, dashboard. You don't drive a bare engine. You drive a car.\n\nHere's the line that makes this the foundation of the whole tour: when people say \"the AI did X\" or \"the AI forgot Y,\" the interesting part is usually *not the model* \u2014 it's the harness. The model didn't remember your project; the harness fed it a file. The model didn't decide to run your tests; it emitted a request, and the harness ran it.\n\nLet me check it landed. Pick the one that's right:\n\n**A.** The model can run commands and read files by itself; the harness just makes it faster\n**B.** The model only turns text into more text; the harness is what actually reads files, runs commands, and feeds results back to the model\n**C.** The harness is the smart part that does the reasoning; the model just stores data\n**D.** The model and the harness are two names for the same thing \u2014 Claude Code\n\nPick a letter, then tell me *why* you picked it in your own words."
+    },
+    {
+      "role": "student",
+      "text": "B.\n\nI picked B because that's basically what you just explained \u2014 the model can only do the text thing, like predict what words come next, but it can't actually go open a file or run anything on its own. It just... says it wants to. And then the harness is the part that actually goes and does it and brings the answer back.\n\nA felt wrong because you said the model can't run commands by itself at all, so the harness isn't just making it \"faster,\" it's the thing actually doing the doing. And C kind of flips it backwards \u2014 it makes the harness sound like the smart one, but the model's the brain, the harness is more like the hands? And D just seemed off because you made a point of saying they're different things, the engine versus the car.\n\nIs that right? Did I get the why part okay too?"
+    },
+    {
+      "role": "tutor",
+      "text": "Yes \u2014 both the pick and the why. You nailed the part most people skip: you didn't just say \"B is right,\" you said *why each wrong one is wrong*, and your reasons were the real reasons. \"The harness isn't making it faster, it's the thing doing the doing\" \u2014 exactly. And \"model's the brain, harness is the hands\" is a genuinely good compression of C's mistake. D you caught on the engine-vs-car distinction. That's mastery, not luck.\n\nChecklist now:\n\n- [x] **1. The Model and the Harness** \u2014 explained back + checked\n- [ ] 2. The System Prompt\n- [ ] 3. Context\n- [ ] 4. CLAUDE.md\n- [ ] 5. Tools (and MCP)\n- [ ] 6. Sessions, Turns, Hooks\n\nOne last thing before we move up a layer, and it's the part that makes this stick beyond a quiz: **point this at something real.** Last time you used Claude Code, or any AI coding assistant \u2014 was there a moment where it \"knew\" something about your project, or \"forgot\" something, or \"ran\" something for you? Pick one and tell me: was that the model, or the harness? Don't overthink it \u2014 even a half-memory works."
+    },
+    {
+      "role": "student",
+      "text": "Oh, um, okay. Yeah, actually \u2014 last week I was using Claude Code on this little Python script, and at one point I asked it about a function and it like, knew the function I meant even though I didn't paste it. So that was... the harness? Because it must've gone and read the file for me, since the model can't do that on its own?\n\nAnd then later it like, totally forgot a thing I'd told it earlier in the same chat, which felt weird. I'm less sure on that one \u2014 is forgetting the harness too? Like the harness didn't feed it back the old part? Or is that the model? I keep wanting to blame the model but you said it's usually the harness, so... harness?"
+    },
+    {
+      "role": "tutor",
+      "text": "Good instinct, and you got both right \u2014 let me make sure the second one rests on solid ground, because \"forgetting\" is where the context idea (Module 3) is hiding.\n\nThe \"knew the function I didn't paste\" one: yes, harness. The model can't reach into your file on its own \u2014 it asked, and the harness opened the file and fed the contents back as text. Spot on.\n\nThe forgetting one \u2014 you reasoned your way to the right answer, but let me sharpen *why*, because \"blame the harness because the tutor said so\" isn't quite the grip I want you to have. The model genuinely has no memory between turns. None. Every turn, all it sees is the block of text the harness hands it. So when it \"forgot\" the thing you said earlier, what actually happened is that thing wasn't in the block of text it got that turn \u2014 the harness either dropped it or summarized it away to make room. So yes, it's the harness, but the deeper reason is: *the model never remembers anything on its own \u2014 remembering is entirely the harness's job of putting the right text back in front of it.* That's a near-perfect setup for the next module, which is exactly about that block of text.\n\nYou held a real example against the model/harness line and it bent the right way. That's the transfer I wanted.\n\nNow \u2014 given the session's pacing, here's where I'll be straight with you. We'd keep going exactly like this: Module 2 (the System Prompt \u2014 the hidden instructions, written by Anthropic not you, that make the model *act* like an agent), then Module 3 (Context \u2014 that \"block of text\" we just kept bumping into, finite and filling up), and on through CLAUDE.md, Tools, and Hooks. Same loop every time: your guess first, then options to react to, then you tell me the why, then we point it at your real work. The lane stays yours, and you can switch to blank-page questions whenever you feel like it.\n\nSince you've genuinely earned Module 1 \u2014 both the explanation and a real example \u2014 let me close with the one thing that ties this whole track together, and it's a question you can already answer:\n\nIn one sentence \u2014 when something seems \"magic\" about Claude Code (it knew, it forgot, it ran something), what's the single question you should ask to make it stop being magic?"
+    }
+  ]
+}

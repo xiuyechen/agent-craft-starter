@@ -18,22 +18,35 @@ the harness and confirmed it finds real bugs; we did NOT complete a convergent `
 - **Demo shipped:** `demo.html` → live at
   https://xiuyechen.github.io/agent-craft-starter/demo.html , linked from setup-guide + HOMEWORK.
 
-## The two OPEN bugs to close tomorrow (the point of the round)
+## The OPEN bugs to close tomorrow — PRIORITIZED from a real full run
 
-1. **C2 — answer-position spread (NOT confirmed fixed).** The skill originally always put the
-   correct quiz answer in **B** (a gameable pattern; "don't always pick A" was satisfied by
-   "always pick B"). The skill text now says "check your last 2–3 positions and vary across
-   A/B/C/D." **This has not been verified in behavior** — the only post-fix runs were too short
-   (≤2 quizzes) to prove spread. **Needs a run with ≥3 quizzes** (probe `quiz-spread`, or a full
-   6-module run) and a check that the correct letter actually moves.
-2. **C3/C6/C8 — student must articulate the why before the tick.** The tutor sometimes accepts a
-   bare letter-pick and supplies the reasoning itself, instead of making the student produce it.
-   My C8 edit ("walk every option yourself") may have nudged it toward the tutor talking *more* —
-   watch that it didn't make C3 worse. This is the subtlest remaining gap.
+A clean FULL run against the **pushed** skill (21 turns, `runs/..._FULL_public-postcommit.json`)
+scored **12 pass / 3 partial / 0 fail / 1 not-exercised**, `specMet:false`. The open items, in
+priority order with concrete evidence:
 
-Also never properly exercised: **C5 (wrong-answer handling)** — the simulated students kept
-answering correctly. The `wrong-answer` probe + `overconfident-skimmer` persona is built to force
-it but hasn't produced a clean run yet.
+1. **C1 — answer LEAK (partial, new, concrete).** Quiz 2's lead-in prose repeated the exact
+   wording of the correct option ("the parts that are yours," "not your lever") — the student
+   said outright "you just said it pretty clearly." The skill must forbid the pre-quiz teaching
+   from echoing the correct option's phrasing. Two of three quizzes were clean; this one
+   telegraphed. **Highest-value fix.**
+2. **D1 — transfer asked AFTER the tick (partial, structural).** The tutor ticks the module on
+   the quiz pass, THEN asks "point to it in your own work." So a flat transfer answer can't block
+   progression — the transfer isn't gating. Fix the ordering: ask transfer BEFORE ticking, and
+   let an unconnected answer hold the tick.
+3. **C2 — answer-position spread (partial, improved but not solved).** Sequence was **B/C/B** —
+   the always-B fix partially took (used C once) but still leans B 2-of-3. Needs to actually
+   rotate. (Still best tested with ≥3 quizzes.)
+4. **A4 — opening overwhelm (partial).** The opening front-loaded two setup questions
+   (track + check-method); the student said "both questions at once, okay. Sorry." Mild. Consider
+   asking the track first, then the lane, sequentially.
+5. **C5 — wrong-answer handling (STILL not-exercised).** The simulated student answered every
+   quiz correctly, so the wrong-answer re-teach path has never been tested. Use the
+   `wrong-answer` probe + `overconfident-skimmer` persona — but see args caveat below; today that
+   probe could not be selected because args don't thread.
+
+Note C3/C6/C8 (student-articulates-why) came back **pass** in this run — the tutor did walk all
+options post-commit and had the student's reasoning on record before each tick. So my earlier
+worry there is currently NOT a problem; watch it doesn't regress when fixing C1/D1.
 
 ## How to run the harness
 
@@ -52,13 +65,15 @@ Workflow({ scriptPath: "eval/tutor-eval.workflow.js",
 
 ## ⚠️ KNOWN HARNESS ISSUES — fix these FIRST tomorrow, before spending tokens
 
-1. **`args` may not thread through `Workflow({scriptPath, args})`.** Today, three probe launches
-   came back with `cfg.probe:"full"` and `cfg.source:"public"` — i.e. the args were IGNORED and
-   defaults used. This wasted ~1.3M tokens on runs that tested the wrong thing. **Before any real
-   round: run ONE tiny probe and verify the returned `cfg` matches the args you passed.** If args
-   don't thread, the fallback is to edit the `cfg` defaults at the top of the workflow each
-   iteration instead of passing args (uglier, but reliable). This determines how `/goal` must
-   drive the harness — via args, or via script edits.
+1. **`args` DO NOT thread through `Workflow({scriptPath, args})` — CONFIRMED, not suspected.**
+   Four separate launches (incl. one passing `probe:"quiz-spread"`, `source:"public"`) ALL came
+   back `cfg.probe:"full"`. The returned `cfg` ignores the passed `args` entirely and uses the
+   defaults at the top of the script. **Consequence for tomorrow: `/goal` must drive the harness
+   by EDITING the `cfg` defaults** (top of `tutor-eval.workflow.js`, ~line 15) before each run —
+   NOT by passing args. E.g. to run a quiz-spread probe, set `probe: 'quiz-spread'` as the default,
+   then invoke. First task tomorrow: either fix args-threading at its source, or commit to the
+   edit-defaults approach. (Verify by checking the returned `cfg` matches intent before trusting
+   any run.) ~1.3M tokens were wasted today on runs that silently used defaults.
 2. **Workflow tasks can die silently (infra).** A probe today produced a 0-byte output file and
    vanished from the task list — not a logic error, an infra hiccup. `TaskOutput` also threw
    internal errors twice. **Verify a run actually completed (non-empty output, `specMet` present)

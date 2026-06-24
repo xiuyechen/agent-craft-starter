@@ -13,6 +13,11 @@ understanding plus a setup you keep.
 
 Estimated time: **60–75 min.** Do it before Session 2 if you can.
 
+> **Want to see what the tutor is like before you commit the time?** Read a real session
+> first: **[the tutor demo](https://xiuyechen.github.io/agent-craft-starter/demo.html)** walks
+> through an actual tutored conversation (and shows how we grade the tutor against its own
+> promises). Good for PIs and instructors deciding whether to assign this.
+
 ---
 
 ## Part 0 — Take the tour (~15 min)

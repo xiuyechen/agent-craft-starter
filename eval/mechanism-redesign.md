@@ -113,7 +113,45 @@ not a nice-to-have.
 emit the checklist line (so the "ticked iff complete" rule is computed, not asserted) — that's the
 script form, optional but on-spine.
 
-## M2 — The clean-room grader (the deepest mechanism, and it's your own Lesson 3)
+## M2 — Clean-room sub-agents at MULTIPLE teaching seams (refined 2026-06-25)
+
+**Sharper framing (Sue):** the teach→quiz leak is not only self-*grading*, it's self-*authoring an
+exam after teaching to it*. When the same agent teaches then writes the quiz, the quiz drifts toward
+"did you hear what I just said" — it tests recall of the tutor's phrasing, not the concept. That is
+why the quizzes have felt soft: the student passes by echoing the tutor's words. The fix is to put a
+clean-room boundary at more than one seam, each sub-agent given a deliberately RESTRICTED context:
+
+- **M2a — clean-room quiz AUTHOR.** Input: the module's learning objective (from the curriculum file)
+  + the bare list of distractor-worthy misconceptions. Explicitly NOT given: the teaching transcript.
+  Output: stem + correct claim + 3 distractors. Because it never saw the lesson, it cannot write a
+  question answerable by parroting the tutor's phrasing — the question probes the concept cold. This
+  makes quizzes harder and more honest BY CONSTRUCTION, not by asking the tutor to "write a hard
+  quiz" (an intention). Its output feeds quiz_prep.py for placement (composes cleanly: author owns
+  content, quiz_prep owns position/length).
+- **M2b — clean-room GRADER.** Input: question + student's raw answer + objective. NOT given: the
+  transcript or "what the tutor hoped they'd say." Output: `{passed, reasoning_present, gap}`. Feeds
+  the M1 object's `quiz.passed` / `why` fields — the tutor may not set them from its own read.
+- **M2c (optional) — clean-room TRANSFER judge.** Input: the concept + the student's real-work
+  connection. Output: did the connection actually instantiate the concept, or is it vibes? Feeds the
+  M1 `transfer` gate. Optional because transfer is partly visible; add if rubber-stamped transfers
+  show up in evals.
+
+**Why authoring + grading beats grading alone:** grading-only still lets a soft, echo-able question
+through (the grader faithfully passes a student who parroted — the question was the weak link). Moving
+the clean room UPSTREAM to authoring removes the echo channel at the source. Grade *and* author clean
+= the quiz can't be gamed by phrasing AND the pass can't be rubber-stamped.
+
+**Balance check (cost):** this is now 2–3 sub-agent calls per module (author, grade, maybe transfer)
+× ~6 modules = ~12–18 calls/session. Real latency and token cost. Justified IF the skill's job is to
+*be* a disciplined tutor; possibly over-built if its job is to *demonstrate* the principle to PIs.
+Decide per M1's results. Do NOT clean-room the judgment seams (restate-first, why-before-what,
+warmth) — visible, cheap to see, and sub-agenting them would make the tutor robotic.
+
+**Symmetry note:** the eval harness ALREADY clean-room-authors (rubric-from-spec, blind to the skill)
+and clean-room-grades (judge panel, blind to each other). M2 gives the LIVE skill the same discipline
+the eval already runs on. That symmetry is a strong signal the design is right.
+
+### M2 (original) — The clean-room grader, your own Lesson 3
 
 **Problem it kills:** the tutor grades its own teaching. The same agent that wants to feel like it
 taught well decides whether the student demonstrated mastery. That is the exact conflict of Agent

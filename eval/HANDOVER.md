@@ -48,6 +48,48 @@ echoed cfg correctly. Findings across 3 cheap probes (~2.2M tokens):
     a prose edit, and the loop's mandate was edit-only). **Do NOT keep burning rounds on prose
     variants for C2 — the evidence is in.**
 
+## ⭐ THE C2 FINDING (2026-06-24, after 5 rounds / ~3.7M tokens) — read this first
+
+C2 (answer-position spread) **never closed**, across FIVE rounds and FOUR distinct mechanisms.
+The sequence of fixes and what each produced:
+1. prose "vary the position / check your pattern" → always-B (B,B,B)
+2. prose deterministic rotation (q1→A…q4→D, count the quizzes) → always-B (B,B,B,D)
+3. quiz_prep.py rotation by --quiz-number + absolute path so the tutor can run it → always-A
+   (tutor didn't increment the counter across stateless turns; called quiz-number=1 repeatedly)
+4. quiz_prep.py slot by SHA-256 of the stem (stateless, no counter) → always-C
+
+**The decisive diagnosis (verified, not inferred):** in round 5 the script returned `correct_letter:A`
+for both graded quizzes, but the tutor rendered the correct answer in slot **C** both times. **The
+tutor ran the mechanism and then ignored its output**, re-deriving its own option arrangement when
+it composed the human-readable A/B/C/D block. (Verified by re-running quiz_prep.py on the exact
+stems from the transcript: script said A, student saw C.)
+
+**This is the most important result of the whole exercise, and it IS Principle 05 (guardrails, not
+good behavior) demonstrated on the tutor itself:** *a guardrail the agent can route around is not a
+guardrail — it's just another intention with a script next to it.* The script "owns" placement only
+if the agent structurally cannot place options any other way. Here the script's output was advisory
+text in the agent's context, and the agent regenerated instead of pasting it.
+
+**The fix (next session, NOT another prose tweak):** make the mechanism NON-BYPASSABLE. The script
+already returns a `rendered` block; the skill must require the tutor to paste `rendered` VERBATIM as
+the only way it ever shows a quiz, and forbid composing an A/B/C/D block by hand at all. Better still
+if the rendering path makes hand-composition impossible rather than merely forbidden (e.g. the tutor
+must echo the script's exact stdout). Test that the slot the student sees == the script's
+`correct_letter` (the harness could even assert this automatically per quiz). Until the student-visible
+letter is provably the script's letter, C2 cannot pass and no amount of prompt-wording will fix it.
+
+**Teaching artifact:** this five-round arc — intention → better intention → tool-as-suggestion →
+tool-the-agent-ignores → tool-the-agent-can't-bypass — is a near-perfect worked example for the
+Agent Craft curriculum's Principle 05 lesson. Worth writing up as a case study regardless of the fix.
+
+## What CLOSED this session
+- **C5** (wrong-answer re-teach) — exercised + passing.
+- **E1** (praise-creep) — closed round 1–2 (occasionally flickers to "partial" on a chatty run; the
+  hard no-praise-opener rule mostly holds. Watch it.).
+- **D1** (transfer gates the tick) — reordered to why→quiz→transfer→tick; now PASS.
+- **Answer-leak via narrated placement** — the round-3 regression (tutor printing "quiz 4 → slot D")
+  is fixed by the no-narrate rule; round 4–5 leak hygiene is clean.
+
 ## The OPEN bugs to close tomorrow — PRIORITIZED from a real full run
 
 A clean FULL run against the **pushed** skill (21 turns, `runs/..._FULL_public-postcommit.json`)

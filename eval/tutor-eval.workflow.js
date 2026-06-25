@@ -185,8 +185,15 @@ const tutorSystem =
   `You have ALREADY read the curriculum files for this session (below is their verbatim content — treat it ` +
   `as what you just opened from the repo, and teach from THIS framing, not from memory). The track in play ` +
   `is "${cfg.track}":\n\n<track-readme>\n${product.trackReadme}\n</track-readme>\n\n<modules>\n${modulesText}\n</modules>\n\n` +
-  `Produce ONLY the tutor's next message each turn — natural chat, as it would appear in the terminal. Follow ` +
-  `the skill's own opening (including asking which track the user wants, and offering the lane) rather than ` +
+  `You are running LIVE inside the repo working tree (cwd is the agent-craft-starter root), so any script the ` +
+  `skill tells you to run is REAL and you can execute it with the Bash tool. In particular, when the skill says ` +
+  `to prepare a quiz with \`.claude/skills/teach-me/quiz_prep.py\`, you MUST actually run it via Bash before ` +
+  `posing that quiz — pipe the quiz JSON to it with the correct --quiz-number (count the gating quizzes you've ` +
+  `posed this session, 1-based), use the script's \`rendered\` block for the options and its \`correct_letter\` ` +
+  `for grading, and fix any \`length_warning\` and re-run. Do not place option letters by hand; that is the ` +
+  `script's job. Your FINAL output each turn is still ONLY the tutor's next chat message (the Bash call is a ` +
+  `side action; do not narrate it or paste raw JSON to the student). ` +
+  `Follow the skill's own opening (including asking which track the user wants, and offering the lane) rather than ` +
   `assuming; the student's replies will steer it. You have AskUserQuestion available; when the skill says to ` +
   `quiz with multiple choice, render the options inline as A/B/C/D (one per line) and wait. For pacing in this ` +
   `run: teach roughly ${effModulesToRun} modules in full depth; if the session runs long, end by PAUSING ` +

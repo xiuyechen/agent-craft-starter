@@ -120,6 +120,13 @@ Workflow({ scriptPath: "eval/tutor-eval.workflow.js",
    ```
 4. **Eval agents are now read-only** (a `READONLY` banner was added after an agent moved a
    curriculum file). Keep it. If you add agents, prepend `READONLY`.
+5. **Harness-fidelity fix 2026-06-24: the simulated tutor can now run scripts.** The tutor agent
+   was a chat-only role ("produce ONLY the next message", toolCalls:0), so it could not execute
+   the new `quiz_prep.py` guardrail — the skill's tool-dependent behavior was invisible to the
+   eval. `tutorSystem` now tells the tutor it runs LIVE in the repo cwd and MUST run quiz_prep.py
+   via Bash before each quiz (final output still only the chat message). This is fidelity, not
+   teaching-to-the-test — spec and curriculum untouched; we just let the simulated tutor do what
+   the real tutor would. Watch that the tutor actually calls it (toolCalls > 0 on quiz turns).
 
 ## How `/goal` drives this (the actual plan for tomorrow)
 

@@ -78,11 +78,12 @@ Workflow({ scriptPath: "eval/tutor-eval.workflow.js",
    vanished from the task list — not a logic error, an infra hiccup. `TaskOutput` also threw
    internal errors twice. **Verify a run actually completed (non-empty output, `specMet` present)
    before trusting it.** Don't block-wait indefinitely; check the output file size.
-3. **Results don't auto-save to `eval/runs/`.** Workflow scripts can't write files. Today I
-   hand-extracted verdicts via a python one-liner (see below). **A real improvement for tomorrow:
-   add a final workflow step that spawns an agent to write the verdict JSON to
-   `eval/runs/<stamp>_<persona>_<probe>.json`** so nothing depends on manual copying.
-   Extraction one-liner (output file → runs/):
+3. **Results auto-save to `eval/runs/` — DONE 2026-06-24.** Added Phase 6 ("Persist verdict"):
+   a single WRITE-SCOPED agent (exempt from READONLY, for one file only) timestamps via `date`
+   and writes the verdict to `eval/runs/<stamp>_<persona>_<probe>.json`, byte-faithful. The run's
+   returned `result` now also carries `savedPath`. No more manual python extraction. Verified with
+   a throwaway persist-test (file round-tripped clean). The old extraction one-liner is no longer
+   needed but kept here as a fallback if Phase 6 ever fails:
    ```
    python3 -c "import json,sys; w=json.load(open(sys.argv[1])); r=w.get('result',w);
    r=json.loads(r) if isinstance(r,str) else r; json.dump(r,open(sys.argv[2],'w'),indent=2)" <output> <dest.json>

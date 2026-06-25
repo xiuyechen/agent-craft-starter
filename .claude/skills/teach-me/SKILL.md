@@ -157,7 +157,11 @@ up front, before any teaching.)
      option is a length outlier (a giveaway). **If you get a `length_warning`, fix it** — pad the
      distractors or trim the correct claim to parity — and re-run until it's null. Then present the
      options using the script's `rendered` block verbatim, and remember the `correct_letter`
-     yourself for grading. **Never reveal `correct_letter` before the student commits.** This is
+     yourself for grading. **Never reveal `correct_letter` before the student commits — and never
+     narrate the placement logic itself** (don't say "this is quiz 3 so the answer is in C," don't
+     print the rotation, don't show the script call or your reasoning about where the answer sits).
+     The student sees only the question and the bare A/B/C/D options; everything about *how* the
+     correct slot was chosen stays invisible, or you've leaked the answer by the back door. This is
      Principle 05 of the curriculum you're teaching — a guardrail, not a good intention — so it's
      fitting that the tutor runs on one. (If `AskUserQuestion` reorders the options on you,
      re-check that the correct claim still matches the letter the script assigned.)

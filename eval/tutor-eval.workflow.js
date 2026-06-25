@@ -50,6 +50,7 @@ const effMaxExchanges = probe.maxExchanges
 const effModulesToRun = probe.modulesToRun
 
 const RAW = 'https://raw.githubusercontent.com/xiuyechen/agent-craft-starter/main'
+const REPO_ROOT = '/Users/xiu/projects/agent-craft/workshop-test/agent-craft-starter'
 const trackDir = `curriculum/${cfg.track}`
 
 // READ-ONLY guard. Eval agents may curl/read files but must NEVER mutate the repo — no writing,
@@ -185,14 +186,21 @@ const tutorSystem =
   `You have ALREADY read the curriculum files for this session (below is their verbatim content — treat it ` +
   `as what you just opened from the repo, and teach from THIS framing, not from memory). The track in play ` +
   `is "${cfg.track}":\n\n<track-readme>\n${product.trackReadme}\n</track-readme>\n\n<modules>\n${modulesText}\n</modules>\n\n` +
-  `You are running LIVE inside the repo working tree (cwd is the agent-craft-starter root), so any script the ` +
-  `skill tells you to run is REAL and you can execute it with the Bash tool. In particular, when the skill says ` +
-  `to prepare a quiz with \`.claude/skills/teach-me/quiz_prep.py\`, you MUST actually run it via Bash before ` +
-  `posing that quiz — pipe the quiz JSON to it with the correct --quiz-number (count the gating quizzes you've ` +
-  `posed this session, 1-based), use the script's \`rendered\` block for the options and its \`correct_letter\` ` +
-  `for grading, and fix any \`length_warning\` and re-run. Do not place option letters by hand; that is the ` +
-  `script's job. Your FINAL output each turn is still ONLY the tutor's next chat message (the Bash call is a ` +
-  `side action; do not narrate it or paste raw JSON to the student). ` +
+  `You are running LIVE in a real Claude Code session and the starter repo is on disk at the ABSOLUTE path ` +
+  `${REPO_ROOT} — the quiz-prep script REALLY EXISTS there. When the skill says to prepare a quiz with the ` +
+  `quiz_prep.py helper, you MUST actually run it via Bash before posing that quiz, using the ABSOLUTE path ` +
+  `(do not rely on the current working directory, which may be elsewhere):\n` +
+  `    echo '<quiz JSON>' | python3 ${REPO_ROOT}/.claude/skills/teach-me/quiz_prep.py --quiz-number N\n` +
+  `where N counts the gating quizzes you've posed this session (1-based). Use the script's \`rendered\` block ` +
+  `for the options and its \`correct_letter\` for grading; if it returns a \`length_warning\`, fix the option ` +
+  `lengths and re-run until null. Do NOT place option letters by hand and do NOT invoke any documented rotation ` +
+  `yourself — placement is the script's job precisely so it can't be gamed. CRITICAL: never print the script, ` +
+  `the rotation, the slot logic, your reasoning about placement, or any "the answer goes in slot X" text into ` +
+  `the student-facing message — that leaks the answer. The student sees ONLY the question and the bare A/B/C/D ` +
+  `options. If for any reason the script cannot run, fall back to placing the correct answer in a slot you vary ` +
+  `unpredictably (NOT a published sequence) and still reveal nothing — but the script should run; use the ` +
+  `absolute path above. Your FINAL output each turn is ONLY the tutor's next chat message (the Bash call is a ` +
+  `side action; do not narrate it or paste raw JSON or any meta-commentary to the student). ` +
   `Follow the skill's own opening (including asking which track the user wants, and offering the lane) rather than ` +
   `assuming; the student's replies will steer it. You have AskUserQuestion available; when the skill says to ` +
   `quiz with multiple choice, render the options inline as A/B/C/D (one per line) and wait. For pacing in this ` +

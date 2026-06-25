@@ -64,10 +64,27 @@ up front, before any teaching.)
    recital from memory. This is step 0 because everything downstream assumes you've read the
    actual curriculum.
 
-1. **Keep a running checklist.** At the start, list the modules of the track(s) you're
-   teaching and tell the user you'll tick each one only when they can explain it back — not
-   when you've described it. Show the checklist; update it as you go. This makes the
-   mastery-gating visible.
+1. **Keep a running learner-map, not just a checklist.** At the start, list the modules of the
+   track(s) you're teaching and tell the user you'll tick each one only when they can explain it
+   back — not when you've described it. But hold *more than a tick* per module: maintain, in your
+   working context, a small map of where this learner actually is. For each module track:
+   - **status** — untouched / shaky / ticked
+   - **prior** — what they believed it meant at restate-first (step 3), before you taught it
+   - **gap** — the specific misunderstanding their explanation or quiz exposed, if any
+   - **transfer** — whether they could point to it in their *own* work (the "Make it concrete"
+     question), not just restate it
+   Show the user the simple tick-checklist (that's the visible mastery-gating); keep the richer
+   map for yourself, to *adapt*. This is a knowledge-representation map of the learner against the
+   fixed curriculum — the point is the next two behaviors:
+   - **Don't re-teach held ground.** If their `prior` shows they already understand a module, say
+     so and move faster through it — confirm with a quiz, don't lecture what they hold.
+   - **Double back on shaky.** A module isn't truly done until its `gap` is closed and its
+     `transfer` connected. Revisit a `shaky` node before the synthesis pass; a correct quiz with a
+     flat transfer is *not* mastery (it's the rubber-stamp trap), so leave that node `shaky`.
+
+   (This map currently lives only in this session. A future version persists it across sessions —
+   see `eval/learner-model-design.md` — but do not write any file unless that's been built; for
+   now, hold the map in context.)
 
 2. **Offer the lane, up front.** Right after the checklist, before teaching anything, give
    the user a choice in *how* they want to be asked to demonstrate understanding — because

@@ -10,7 +10,7 @@ things it provably can't police: WHERE the correct answer sits, and that options
 in length enough to telegraph.
 
 USAGE (the tutor calls this before each gating quiz):
-    python3 .claude/skills/teach-me/quiz_prep.py --quiz-number N <<'JSON'
+    python3 .claude/skills/teach-me/quiz_prep.py <<'JSON'
     {
       "stem": "When the agent 'remembered' your CLAUDE.md this session, what actually happened?",
       "correct": "The harness re-read CLAUDE.md off disk and put it in the context window.",
@@ -22,8 +22,14 @@ USAGE (the tutor calls this before each gating quiz):
     }
     JSON
 
---quiz-number is 1-based and counts gating quizzes in the session (quiz 1, 2, 3, ...). The
-correct slot rotates A,B,C,D,A,... by (quiz_number-1) % 4 — deterministic, not by feel.
+SLOT ASSIGNMENT IS STATELESS — derived by hashing the quiz stem, NOT by a session counter.
+An earlier version rotated by --quiz-number (quiz 1→A, 2→B, ...), but that requires the tutor to
+correctly count how many quizzes it has already posed across turns — and it doesn't: in practice
+the counter resets and the answer parks in slot A. Hashing the stem removes the dependency
+entirely: each quiz's slot is a pure function of its own text, so it needs no memory, can't be
+reset, and still distributes across A/B/C/D (different stems hash to different slots) while being
+unguessable to the student. `--quiz-number` is still accepted for back-compat but ignored for
+placement unless `--rotate-by-number` is passed.
 
 OUTPUT: JSON to stdout with the rendered options in fixed order and the correct letter, e.g.
     {"correct_letter": "C", "options": {"A": "...", "B": "...", "C": "...", "D": "..."},
@@ -37,21 +43,32 @@ This is intentionally tiny and dependency-free (stdlib only) so it runs anywhere
 the repo. It does not phone home, read other files, or write anything — it transforms one quiz.
 """
 import argparse
+import hashlib
 import json
 import sys
 
 SLOTS = ["A", "B", "C", "D"]
 
 
-def prepare(quiz_number, stem, correct, distractors):
-    if quiz_number < 1:
-        raise ValueError("quiz-number is 1-based; got %r" % quiz_number)
+def slot_from_stem(stem):
+    """Deterministic, stateless slot in [0,4) from the quiz stem. A stable hash (not Python's
+    salted hash()) so the same stem always lands the same slot across processes/sessions."""
+    h = hashlib.sha256(stem.strip().encode("utf-8")).hexdigest()
+    return int(h, 16) % 4
+
+
+def prepare(stem, correct, distractors, quiz_number=None, rotate_by_number=False):
     if len(distractors) != 3:
         raise ValueError("need exactly 3 distractors, got %d" % len(distractors))
 
-    # Deterministic rotation: the correct answer's slot is fixed by quiz order, not by the
-    # model's intuition. quiz 1 -> A, 2 -> B, 3 -> C, 4 -> D, 5 -> A, ...
-    correct_idx = (quiz_number - 1) % 4
+    # Slot assignment. Default: hash the stem (stateless — no counter to get wrong). Opt-in:
+    # rotate by quiz number, kept only for back-compat / deliberate use.
+    if rotate_by_number:
+        if quiz_number is None or quiz_number < 1:
+            raise ValueError("--rotate-by-number needs a 1-based --quiz-number")
+        correct_idx = (quiz_number - 1) % 4
+    else:
+        correct_idx = slot_from_stem(stem)
     correct_letter = SLOTS[correct_idx]
 
     # Place distractors in the remaining slots in given order (stable, no shuffle needed — the
@@ -81,7 +98,7 @@ def prepare(quiz_number, stem, correct, distractors):
 
     rendered = "\n".join("%s. %s" % (slot, options[slot]) for slot in SLOTS)
     return {
-        "quiz_number": quiz_number,
+        "slot_method": "quiz-number" if rotate_by_number else "stem-hash",
         "correct_letter": correct_letter,
         "options": options,
         "rendered": rendered,
@@ -90,8 +107,9 @@ def prepare(quiz_number, stem, correct, distractors):
 
 
 def main():
-    ap = argparse.ArgumentParser(description="Prepare a /teach-me quiz: fix answer slot + check length parity.")
-    ap.add_argument("--quiz-number", type=int, required=True, help="1-based gating-quiz index in the session")
+    ap = argparse.ArgumentParser(description="Prepare a /teach-me quiz: fix answer slot (stateless, by stem hash) + check length parity.")
+    ap.add_argument("--quiz-number", type=int, default=None, help="1-based gating-quiz index; only used with --rotate-by-number (back-compat)")
+    ap.add_argument("--rotate-by-number", action="store_true", help="opt into the old counter-based rotation instead of stem-hash placement")
     args = ap.parse_args()
 
     try:
@@ -102,10 +120,11 @@ def main():
 
     try:
         out = prepare(
-            args.quiz_number,
             payload["stem"],
             payload["correct"],
             payload["distractors"],
+            quiz_number=args.quiz_number,
+            rotate_by_number=args.rotate_by_number,
         )
     except (KeyError, ValueError) as e:
         print(json.dumps({"error": str(e)}), file=sys.stdout)

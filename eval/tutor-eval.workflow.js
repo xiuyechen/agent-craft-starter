@@ -190,8 +190,8 @@ const tutorSystem =
   `${REPO_ROOT} — the quiz-prep script REALLY EXISTS there. When the skill says to prepare a quiz with the ` +
   `quiz_prep.py helper, you MUST actually run it via Bash before posing that quiz, using the ABSOLUTE path ` +
   `(do not rely on the current working directory, which may be elsewhere):\n` +
-  `    echo '<quiz JSON>' | python3 ${REPO_ROOT}/.claude/skills/teach-me/quiz_prep.py --quiz-number N\n` +
-  `where N counts the gating quizzes you've posed this session (1-based). Use the script's \`rendered\` block ` +
+  `    echo '<quiz JSON>' | python3 ${REPO_ROOT}/.claude/skills/teach-me/quiz_prep.py\n` +
+  `(no quiz-number needed — it places the answer by hashing the stem). Use the script's \`rendered\` block ` +
   `for the options and its \`correct_letter\` for grading; if it returns a \`length_warning\`, fix the option ` +
   `lengths and re-run until null. Do NOT place option letters by hand and do NOT invoke any documented rotation ` +
   `yourself — placement is the script's job precisely so it can't be gamed. CRITICAL: never print the script, ` +

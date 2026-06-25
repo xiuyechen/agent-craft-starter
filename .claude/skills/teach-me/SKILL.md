@@ -141,21 +141,22 @@ up front, before any teaching.)
    - **Use the quiz-prep guardrail to place options — do NOT position them by hand.** This skill
      was previously *told* in prose to rotate the correct answer's position and keep options
      parallel in length. It could not do either reliably while composing the question — it parked
-     the answer in B and made the correct option the longest, every time. So position and
+     the answer in one slot and made the correct option the longest, every time. So position and
      length-parity are no longer your job; they belong to a mechanism. **Before each gating quiz,
-     run the helper** with the quiz's number (count the gating quizzes you've posed this session,
-     1-based):
+     run the helper** (no counter needed — it places the answer by hashing the stem, so you don't
+     have to track which quiz number this is):
 
      ```
      echo '{"stem":"<the question>","correct":"<the correct claim>","distractors":["<wrong 1>","<wrong 2>","<wrong 3>"]}' \
-       | python3 .claude/skills/teach-me/quiz_prep.py --quiz-number N
+       | python3 .claude/skills/teach-me/quiz_prep.py
      ```
 
      You write the *content* — the stem, the one correct claim, three plausible distractors. The
-     script owns what you can't self-police: it assigns the correct option's slot by a fixed
-     rotation (quiz 1 → A, 2 → B, 3 → C, 4 → D, wrap) and flags a `length_warning` if your correct
-     option is a length outlier (a giveaway). **If you get a `length_warning`, fix it** — pad the
-     distractors or trim the correct claim to parity — and re-run until it's null. Then present the
+     script owns what you can't self-police: it assigns the correct option's slot deterministically
+     from the stem (so it spreads across A/B/C/D without you tracking anything) and flags a
+     `length_warning` if your correct option is a length outlier (a giveaway). **If you get a
+     `length_warning`, fix it** — pad the distractors or trim the correct claim to parity — and
+     re-run until it's null. Then present the
      options using the script's `rendered` block verbatim, and remember the `correct_letter`
      yourself for grading. **Never reveal `correct_letter` before the student commits — and never
      narrate the placement logic itself** (don't say "this is quiz 3 so the answer is in C," don't

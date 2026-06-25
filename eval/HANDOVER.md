@@ -65,15 +65,15 @@ Workflow({ scriptPath: "eval/tutor-eval.workflow.js",
 
 ## ⚠️ KNOWN HARNESS ISSUES — fix these FIRST tomorrow, before spending tokens
 
-1. **`args` DO NOT thread through `Workflow({scriptPath, args})` — CONFIRMED, not suspected.**
-   Four separate launches (incl. one passing `probe:"quiz-spread"`, `source:"public"`) ALL came
-   back `cfg.probe:"full"`. The returned `cfg` ignores the passed `args` entirely and uses the
-   defaults at the top of the script. **Consequence for tomorrow: `/goal` must drive the harness
-   by EDITING the `cfg` defaults** (top of `tutor-eval.workflow.js`, ~line 15) before each run —
-   NOT by passing args. E.g. to run a quiz-spread probe, set `probe: 'quiz-spread'` as the default,
-   then invoke. First task tomorrow: either fix args-threading at its source, or commit to the
-   edit-defaults approach. (Verify by checking the returned `cfg` matches intent before trusting
-   any run.) ~1.3M tokens were wasted today on runs that silently used defaults.
+1. **`args` threading — ROOT CAUSE FOUND & FIXED 2026-06-24.** The bug was not Workflow infra:
+   `args` arrives as a JSON **string**, not a parsed object, so `args.probe` was `undefined` and
+   every field silently fell to its default (`cfg.probe:"full"` etc.) — the ~1.3M-token waste on
+   06-23. **Fix:** the harness now parses defensively at the top (`if typeof args === 'string'
+   JSON.parse it`), so passing `args` works regardless of invocation path. **Verified** with two
+   no-agent probes: passing `{probe:"quiz-spread", source:"dev", persona:"overconfident-skimmer"}`
+   now yields exactly that `cfg`. **Consequence: pass args normally** — `/goal` drives the harness
+   via `Workflow({scriptPath, args:{...}})`, no more editing defaults. STILL verify the logged
+   `cfg` matches intent before trusting a run (cheap insurance).
 2. **Workflow tasks can die silently (infra).** A probe today produced a 0-byte output file and
    vanished from the task list — not a logic error, an infra hiccup. `TaskOutput` also threw
    internal errors twice. **Verify a run actually completed (non-empty output, `specMet` present)

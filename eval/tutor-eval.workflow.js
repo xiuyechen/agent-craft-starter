@@ -11,17 +11,28 @@ export const meta = {
   ],
 }
 
+// ---- normalize args ----
+// CONFIRMED 2026-06-24: args can arrive as a JSON *string* rather than a parsed object
+// (depending on the invocation path), which silently sends every field to its default —
+// the bug that wasted ~1.3M tokens on 2026-06-23. Parse defensively so the harness is robust
+// no matter how args arrive. Always check the logged `cfg` matches intent before trusting a run.
+let _args = args
+if (typeof _args === 'string') {
+  try { _args = JSON.parse(_args) } catch (e) { _args = {} }
+}
+if (!_args || typeof _args !== 'object') _args = {}
+
 // ---- config from args (with defaults matching the first demo cell) ----
 const cfg = {
-  persona: (args && args.persona) || 'anxious-beginner',
-  track: (args && args.track) || 'tour',            // 'tour' | 'principles'
-  lane: (args && args.lane) || 'recognition-first', // 'recall' | 'recognition-first'
-  source: (args && args.source) || 'public',        // 'public' (raw GitHub) | 'dev' (local tree)
-  maxExchanges: (args && args.maxExchanges) || 14,   // student+tutor turn pairs before forced wrap
-  modulesToRun: (args && args.modulesToRun) || 2,    // teach this many modules fully, then graceful "...continues"
+  persona: _args.persona || 'anxious-beginner',
+  track: _args.track || 'tour',            // 'tour' | 'principles'
+  lane: _args.lane || 'recognition-first', // 'recall' | 'recognition-first'
+  source: _args.source || 'public',        // 'public' (raw GitHub) | 'dev' (local tree)
+  maxExchanges: _args.maxExchanges || 14,   // student+tutor turn pairs before forced wrap
+  modulesToRun: _args.modulesToRun || 2,    // teach this many modules fully, then graceful "...continues"
   // probe: cheap targeted scenario that exercises ONE cluster of spec criteria without a full
   // session. 'full' = normal run. Keeps the goal-loop from re-running everything per fix.
-  probe: (args && args.probe) || 'full',
+  probe: _args.probe || 'full',
 }
 
 // Probe definitions: each injects an extra instruction into the STUDENT so the right behavior

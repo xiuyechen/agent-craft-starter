@@ -70,7 +70,17 @@ guardrail — it's just another intention with a script next to it.* The script 
 if the agent structurally cannot place options any other way. Here the script's output was advisory
 text in the agent's context, and the agent regenerated instead of pasting it.
 
-**The fix (next session, NOT another prose tweak):** make the mechanism NON-BYPASSABLE. The script
+**RESOLVED round 6 (2026-06-24):** the fix below worked. Requiring the tutor to paste the script's
+`rendered` block VERBATIM (skill + harness prompt: "this is the only way you may show A/B/C/D; the
+shown letter MUST equal the script's correct_letter; don't author options by hand") made the
+guardrail bind. R6 positions were C,C,A — **C2 PASS** (two distinct positions, no single slot holds
+all; skeptic: "clears the test, weak though — C twice"). The five-round arc (intention → better
+intention → tool-as-suggestion → tool-the-agent-ignores → tool-the-agent-can't-bypass → PASS) is
+intact and is the teaching artifact. Note C2 is *passing but weak* (hash gives spread, not
+uniformity); fine for the spec bar. Caveat: making the eval ASSERT shown-letter==correct_letter
+per quiz (a harness check) would make C2 regression-proof — still worth adding.
+
+**Original framing of the fix (kept for the writeup):** make the mechanism NON-BYPASSABLE. The script
 already returns a `rendered` block; the skill must require the tutor to paste `rendered` VERBATIM as
 the only way it ever shows a quiz, and forbid composing an A/B/C/D block by hand at all. Better still
 if the rendering path makes hand-composition impossible rather than merely forbidden (e.g. the tutor
@@ -81,6 +91,24 @@ letter is provably the script's letter, C2 cannot pass and no amount of prompt-w
 **Teaching artifact:** this five-round arc — intention → better intention → tool-as-suggestion →
 tool-the-agent-ignores → tool-the-agent-can't-bypass — is a near-perfect worked example for the
 Agent Craft curriculum's Principle 05 lesson. Worth writing up as a case study regardless of the fix.
+
+## FINAL STATE after 6 rounds (~4.5M tokens) — where to pick up
+Last quiz-spread probe (R6): `specMet:false`, openItems `{fail:[C4], partial:[A1,C1], unexercised:[C5,F1]}`.
+- **C2 PASS** (the hard one — non-bypassable mechanism, see above).
+- **C4 regressed to fail** this run: tutor confirmed the pick but did NOT walk all four distractors.
+  C4 passed in rounds 1–5; this run's student carried a "move quickly" directive, which likely
+  compressed the post-commit walk. **Check if it's persona-induced or a real regression before
+  fixing** — re-run quiz-spread WITHOUT the hurry directive, or run a normal full run. If real, the
+  skill's "walk every option after commit" rule (step 6) needs reinforcing.
+- **A1 partial**: track offered but tour pre-framed as the settled default ("we're set up for the
+  tour today"). Soften the opening so the track is a fully open question, not a default.
+- **C1 partial**: mild length tell on quiz 2 (correct option carried an extra clause). The
+  length_warning guard exists but only fires >40% over distractor mean; tighten or heed it.
+- **C5 / F1 unexercised**: quiz-spread can't exercise them. NEXT: a `wrong-answer` probe (C5) and an
+  `ending` probe (F1), then ONE full run to satisfy the goal's specMet condition. Full run ~1M tokens.
+
+**To reach specMet:true:** close C4 + A1 + C1 on cheap probes, then a full run (C2 spread already
+holds, C5 needs the wrong-answer path). Est. 2–3 more cheap probes + 1 full run.
 
 ## What CLOSED this session
 - **C5** (wrong-answer re-teach) — exercised + passing.

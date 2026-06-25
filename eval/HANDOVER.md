@@ -18,6 +18,36 @@ the harness and confirmed it finds real bugs; we did NOT complete a convergent `
 - **Demo shipped:** `demo.html` → live at
   https://xiuyechen.github.io/agent-craft-starter/demo.html , linked from setup-guide + HOMEWORK.
 
+## Round log — 2026-06-24 evening (/goal loop, source:dev)
+
+Rig fully verified this session: args thread (fix #1), verdicts auto-save (fix #3). Both probes
+echoed cfg correctly. Findings across 3 cheap probes (~2.2M tokens):
+
+- **C5 (wrong-answer) — CLOSED.** wrong-answer probe + overconfident-skimmer: tutor named the
+  wrong pick, held the gate, re-taught, ticked only after correct restatement. Was never-exercised
+  before; now exercised AND passing.
+- **E1 (praise-creep) — CLOSED in one prose edit.** R1 failed ("nearly every turn opens with
+  Correct/Good/exactly"). Added a hard rule: don't open a turn with a praise word; ≤1 affirmation
+  per 3 consecutive turns. R2 guardian: "affirmations almost entirely reasoning-anchored, no creep."
+- **C2 (position spread) — STILL FAILING, and now diagnosed as a prose-resistant case.** Two
+  prose mechanisms tried, both ignored by the model:
+  - "vary the position / check your pattern" → R1 gave B,B,B (always-B).
+  - explicit deterministic rotation (q1→A,q2→B,q3→C,q4→D, count the quizzes) → R2 gave B,B,B,D.
+    The model will not reliably self-administer a counting rule while composing pedagogy; it
+    defaults to B.
+  - Compounding: the skeptic found a SECOND prose-resistant tell (showing as C1 partial) — the
+    correct option is repeatedly the **longest / most fully-reasoned** one, a length giveaway. The
+    prose already says "parallel in length and tone"; the model ignored that too (it naturally
+    writes the true claim more fully).
+  - **CONCLUSION: this is the Principle-05 case the design note anticipated — C2 + length-leak
+    should escalate from prose to a MECHANISM.** Proposed: a tiny quiz-prep helper the skill calls
+    before each quiz — model supplies stem + 4 option-claims + which is correct; the script owns
+    (a) correct-slot by rotation, (b) length-parity normalization, (c) the rendered A/B/C/D block.
+    Model owns content, script owns the two things it can't self-police. See learner-model-design.md
+    §"C2 escalation". Deferred as an explicit decision (adds a script + invocation step — bigger than
+    a prose edit, and the loop's mandate was edit-only). **Do NOT keep burning rounds on prose
+    variants for C2 — the evidence is in.**
+
 ## The OPEN bugs to close tomorrow — PRIORITIZED from a real full run
 
 A clean FULL run against the **pushed** skill (21 turns, `runs/..._FULL_public-postcommit.json`)

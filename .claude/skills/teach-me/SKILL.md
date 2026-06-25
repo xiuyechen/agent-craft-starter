@@ -138,17 +138,29 @@ up front, before any teaching.)
    - **Lead with the format their lane prefers** (open-ended for recall, multiple-choice-first
      for recognition), but both lanes end at the same place: they explain the *why* in their
      own words. Mix in the other format as it helps.
-   - **Place the correct answer by a fixed rotation, not by feel.** Self-judging "put it
-     somewhere different" reliably collapses to always-B — a model picking a slot by intuition
-     does not actually spread. So use a deterministic rule instead: **the correct option's
-     position is set by the quiz's order in the session — quiz 1 → A, quiz 2 → B, quiz 3 → C,
-     quiz 4 → D, then wrap (quiz 5 → A again), and so on.** Count every gating quiz you've posed
-     this session and place this one accordingly. Before sending a quiz, state to yourself which
-     number it is and therefore which slot the answer goes in, then arrange the options so the
-     correct one sits there. This is mechanical on purpose: a student who notices the answer is
-     always in the same position can pass the gate by pattern, not understanding, and a fixed
-     rotation makes that impossible without you having to "remember to vary." (If `AskUserQuestion`
-     reorders options on you, re-check that the correct one landed in the intended slot.)
+   - **Use the quiz-prep guardrail to place options — do NOT position them by hand.** This skill
+     was previously *told* in prose to rotate the correct answer's position and keep options
+     parallel in length. It could not do either reliably while composing the question — it parked
+     the answer in B and made the correct option the longest, every time. So position and
+     length-parity are no longer your job; they belong to a mechanism. **Before each gating quiz,
+     run the helper** with the quiz's number (count the gating quizzes you've posed this session,
+     1-based):
+
+     ```
+     echo '{"stem":"<the question>","correct":"<the correct claim>","distractors":["<wrong 1>","<wrong 2>","<wrong 3>"]}' \
+       | python3 .claude/skills/teach-me/quiz_prep.py --quiz-number N
+     ```
+
+     You write the *content* — the stem, the one correct claim, three plausible distractors. The
+     script owns what you can't self-police: it assigns the correct option's slot by a fixed
+     rotation (quiz 1 → A, 2 → B, 3 → C, 4 → D, wrap) and flags a `length_warning` if your correct
+     option is a length outlier (a giveaway). **If you get a `length_warning`, fix it** — pad the
+     distractors or trim the correct claim to parity — and re-run until it's null. Then present the
+     options using the script's `rendered` block verbatim, and remember the `correct_letter`
+     yourself for grading. **Never reveal `correct_letter` before the student commits.** This is
+     Principle 05 of the curriculum you're teaching — a guardrail, not a good intention — so it's
+     fitting that the tutor runs on one. (If `AskUserQuestion` reorders the options on you,
+     re-check that the correct claim still matches the letter the script assigned.)
    - **After they commit, walk every option yourself** — don't just confirm their pick and let
      them supply the reasoning. State why the right answer is right *and* why each distractor is
      wrong, in your own words. (If the student already explained a distractor, affirm and sharpen
@@ -170,14 +182,22 @@ up front, before any teaching.)
      post-answer feedback, not next to the choices.
    - A quiz gates progression; it is not a victory lap at the end.
 
-7. **Mastery-gated, one module at a time.** Tick a module only when they've (a) explained
-   the *why* in their own words and (b) answered its quiz correctly. **This bar is the same in
-   both lanes** — recognition-first changes how they got there, not what counts as done. Then
-   move on. Do not dump all the modules at once.
+7. **Mastery-gated, one module at a time — and transfer is part of the gate, asked BEFORE the
+   tick.** Tick a module only when they've (a) explained the *why* in their own words, (b)
+   answered its quiz correctly, AND (c) connected it to something real in their own work (the
+   transfer question below). **Ask the transfer question before you tick, not after** — the
+   order matters: if the tick is already on the board, a flat or "I'm not sure where" transfer
+   answer can't actually hold progression, and transfer degrades into a rhetorical victory lap.
+   So: why → quiz → *transfer* → then tick. **A correct quiz with a transfer they can't connect
+   is not yet a tick** — stay on the module, give them a concrete handle ("think about the last
+   time an agent touched your data pipeline"), and only tick once the connection lands. **This
+   bar is the same in both lanes** — recognition-first changes how they got there, not what
+   counts as done. Then move on. Do not dump all the modules at once.
 
 ## Make it concrete to *their* work
 
-After each module, ask a transfer question that fits the track. For **principles**:
+As the final gate on each module — after the quiz, before you tick (see protocol step 7) —
+ask a transfer question that fits the track. For **principles**:
 **"Where in your own lab work does this failure mode show up?"** — the point isn't to know
 the stories, it's to recognize the shapes in their own code, data pipelines, and HPC jobs.
 For the **tour**: **"In your own setup, point to this part"** — e.g. "what's in your

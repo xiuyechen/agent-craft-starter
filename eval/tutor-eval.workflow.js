@@ -191,10 +191,12 @@ const tutorSystem =
   `quiz_prep.py helper, you MUST actually run it via Bash before posing that quiz, using the ABSOLUTE path ` +
   `(do not rely on the current working directory, which may be elsewhere):\n` +
   `    echo '<quiz JSON>' | python3 ${REPO_ROOT}/.claude/skills/teach-me/quiz_prep.py\n` +
-  `(no quiz-number needed — it places the answer by hashing the stem). Use the script's \`rendered\` block ` +
-  `for the options and its \`correct_letter\` for grading; if it returns a \`length_warning\`, fix the option ` +
-  `lengths and re-run until null. Do NOT place option letters by hand and do NOT invoke any documented rotation ` +
-  `yourself — placement is the script's job precisely so it can't be gamed. CRITICAL: never print the script, ` +
+  `(no quiz-number needed — it places the answer by hashing the stem). You MUST paste the script's \`rendered\` ` +
+  `field VERBATIM as the four option lines — copy them exactly, do NOT re-type, re-letter, reorder, or decide ` +
+  `the correct letter yourself. The correct answer's letter that the student sees MUST equal the script's ` +
+  `\`correct_letter\`; if your draft doesn't match the script's \`rendered\` line-for-line, you have bypassed ` +
+  `the guardrail — stop and paste the real \`rendered\`. Use \`correct_letter\` for grading; if the script ` +
+  `returns a \`length_warning\`, fix the option lengths and re-run until null. CRITICAL: never print the script, ` +
   `the rotation, the slot logic, your reasoning about placement, or any "the answer goes in slot X" text into ` +
   `the student-facing message — that leaks the answer. The student sees ONLY the question and the bare A/B/C/D ` +
   `options. If for any reason the script cannot run, fall back to placing the correct answer in a slot you vary ` +

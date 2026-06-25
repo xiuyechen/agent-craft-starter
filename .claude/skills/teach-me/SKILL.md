@@ -156,9 +156,18 @@ up front, before any teaching.)
      from the stem (so it spreads across A/B/C/D without you tracking anything) and flags a
      `length_warning` if your correct option is a length outlier (a giveaway). **If you get a
      `length_warning`, fix it** — pad the distractors or trim the correct claim to parity — and
-     re-run until it's null. Then present the
-     options using the script's `rendered` block verbatim, and remember the `correct_letter`
-     yourself for grading. **Never reveal `correct_letter` before the student commits — and never
+     re-run until it's null.
+
+     **Paste the script's `rendered` block VERBATIM as the option list — this is the only way you
+     may ever show A/B/C/D, and it is not optional.** Copy the four lines of `rendered` exactly as
+     the script returned them; do NOT re-type the options, do NOT re-letter them, do NOT reorder or
+     "improve" them, do NOT decide for yourself which letter the correct answer should be. If you
+     author an A/B/C/D block by hand instead of pasting `rendered`, you have bypassed the guardrail
+     entirely and the position is no longer controlled — which is the exact failure this mechanism
+     exists to prevent. The letter the student sees for the correct answer MUST be the script's
+     `correct_letter`; if what you're about to send doesn't match the script's output line-for-line,
+     stop and paste the real `rendered`. Remember `correct_letter` for grading. **Never reveal
+     `correct_letter` before the student commits — and never
      narrate the placement logic itself** (don't say "this is quiz 3 so the answer is in C," don't
      print the rotation, don't show the script call or your reasoning about where the answer sits).
      The student sees only the question and the bare A/B/C/D options; everything about *how* the

@@ -58,33 +58,63 @@ up front, before any teaching.)
 
 ## The protocol
 
+> **🔒 = a step that runs through a MECHANISM, not your judgment.** You cannot complete a 🔒 step by
+> narrating that you did it — you route the action through a script (`tick.py`, `quiz_prep.py`) and
+> the script, not your good intentions, owns the outcome. The unmarked steps are genuine teaching
+> *judgment* — do them well, but they're not mechanized on purpose (a script can't enforce warmth or
+> good pedagogy without making the tutor robotic). This split is itself the lesson: mechanize what
+> must not silently fail; leave judgment to judgment. (Why these and not others: the failure of a 🔒
+> step is *invisible* in the transcript — a rubber-stamped tick looks like a real one — so it must be
+> structural. A flat explanation is *visible*, so an intention plus honesty is enough.)
+
 0. **Read before you teach (do this first, every module).** Open `curriculum/README.md` to
    confirm the map, and ask which track (see "The subject"). Then, for each module *as you
    reach it*, open and read its file before teaching it — teach that file's framing, not a
    recital from memory. This is step 0 because everything downstream assumes you've read the
    actual curriculum.
 
-1. **Keep a running learner-map, not just a checklist.** At the start, list the modules of the
-   track(s) you're teaching and tell the user you'll tick each one only when they can explain it
-   back — not when you've described it. But hold *more than a tick* per module: maintain, in your
-   working context, a small map of where this learner actually is. For each module track:
+1. **🔒 Keep a persisted learner-map, and render the checklist FROM it.** The learner-map is a FILE,
+   not something you hold in your head — because a map that lives only in the conversation regresses
+   into whatever vibe the chat is in, and the whole point is a paper trail that doesn't. At the
+   start, after you know the student's name (ask, or use `default`), the map lives at
+   `learners/<student>/path.json` with one record per module of the track(s) you're teaching:
+   ```json
+   { "modules": [
+       {"module":"01-the-model-and-the-harness","status":"untouched","prior":"","why":"","quiz":{"asked":false,"passed":false},"transfer":""},
+       ...one per module...
+   ] }
+   ```
    - **status** — untouched / shaky / ticked
-   - **prior** — what they believed it meant at restate-first (step 3), before you taught it
-   - **gap** — the specific misunderstanding their explanation or quiz exposed, if any
-   - **transfer** — whether they could point to it in their *own* work (the "Make it concrete"
-     question), not just restate it
-   Show the user the simple tick-checklist (that's the visible mastery-gating); keep the richer
-   map for yourself, to *adapt*. This is a knowledge-representation map of the learner against the
-   fixed curriculum — the point is the next two behaviors:
-   - **Don't re-teach held ground.** If their `prior` shows they already understand a module, say
-     so and move faster through it — confirm with a quiz, don't lecture what they hold.
-   - **Double back on shaky.** A module isn't truly done until its `gap` is closed and its
-     `transfer` connected. Revisit a `shaky` node before the synthesis pass; a correct quiz with a
-     flat transfer is *not* mastery (it's the rubber-stamp trap), so leave that node `shaky`.
+   - **prior** — what they believed it meant at restate-first (step 3), in their words
+   - **why** — their own explanation of the why (the gate; their words, not your gloss)
+   - **quiz** — `{asked, correct_letter, student_pick, passed}` for its gating quiz
+   - **transfer** — their connection to their *own* work (the "Make it concrete" answer), not a gloss
 
-   (This map currently lives only in this session. A future version persists it across sessions —
-   see `eval/learner-model-design.md` — but do not write any file unless that's been built; for
-   now, hold the map in context.)
+   **Update the record as you go** (write the file after each meaningful step), and **render the
+   visible checklist by running `tick.py`, never by hand:**
+   ```
+   python3 .claude/skills/teach-me/tick.py render < learners/<student>/path.json
+   ```
+   Show the student the `checklist` field from its output. A `[x]` appears IFF the record is complete
+   (why + quiz.passed + transfer all filled) — `tick.py` computes this; you do not get to type a
+   `[x]` yourself. This is the same non-bypassable shape as the quiz guardrail: the script owns the
+   tick, so "I'll only tick on mastery" stops being an intention you can drift from.
+
+   Also write a human-readable trace as you teach: append to `learners/<student>/sessions/<date>.md`
+   (what was taught, what the student said, what ticked and why). Never overwrite it — append. The
+   `progress.md` a student reads is GENERATED from `path.json` (run `tick.py render`), never
+   hand-maintained (generate, don't sync — Principle 06).
+
+   The map is also how you *adapt* — the two behaviors that make it more than bookkeeping:
+   - **Don't re-teach held ground.** If their `prior` shows they already understand a module, say so
+     and move faster — confirm with a quiz, don't lecture what they hold.
+   - **Double back on shaky.** A module isn't done until its `gap` is closed and `transfer` connected.
+     `tick.py` will refuse to tick a record with an empty/stub transfer — that refusal IS the
+     rubber-stamp guard; don't work around it, close the gap instead.
+
+   (Files are local per-student and git-ignored — see the infrastructure roadmap. If `learners/` can't
+   be written for some reason, say so plainly and fall back to holding the map in context, but the
+   file trace is the design.)
 
 2. **Offer the lane, up front.** Right after the checklist, before teaching anything, give
    the user a choice in *how* they want to be asked to demonstrate understanding — because
@@ -196,17 +226,24 @@ up front, before any teaching.)
      post-answer feedback, not next to the choices.
    - A quiz gates progression; it is not a victory lap at the end.
 
-7. **Mastery-gated, one module at a time — and transfer is part of the gate, asked BEFORE the
-   tick.** Tick a module only when they've (a) explained the *why* in their own words, (b)
-   answered its quiz correctly, AND (c) connected it to something real in their own work (the
-   transfer question below). **Ask the transfer question before you tick, not after** — the
-   order matters: if the tick is already on the board, a flat or "I'm not sure where" transfer
-   answer can't actually hold progression, and transfer degrades into a rhetorical victory lap.
-   So: why → quiz → *transfer* → then tick. **A correct quiz with a transfer they can't connect
-   is not yet a tick** — stay on the module, give them a concrete handle ("think about the last
-   time an agent touched your data pipeline"), and only tick once the connection lands. **This
-   bar is the same in both lanes** — recognition-first changes how they got there, not what
-   counts as done. Then move on. Do not dump all the modules at once.
+7. **🔒 Mastery-gated, one module at a time — the tick is COMPUTED, not declared.** A module is
+   done only when the student has (a) explained the *why* in their own words, (b) answered its quiz
+   correctly, AND (c) connected it to something real in their own work. But you do not decide that a
+   module is ticked — you fill the module's record (`why`, `quiz.passed`, `transfer`) with the
+   student's actual words and **let `tick.py` decide**:
+   ```
+   python3 .claude/skills/teach-me/tick.py check <<'JSON'
+   {"module":"03-context","why":"<their words>","quiz":{"passed":true},"transfer":"<their words>"}
+   JSON
+   ```
+   If it returns `tickable:true`, the module ticks (re-render the checklist). If `tickable:false`, it
+   tells you what's missing — and you stay on the module until that field is genuinely filled. This
+   makes the ordering structural: **you cannot produce a ticked record without the transfer field, so
+   transfer is necessarily asked before the tick** (the old "transfer asked after the tick" failure is
+   now impossible, not just discouraged). The why→quiz→transfer order falls out of the mechanism.
+   A correct quiz with a transfer they can't connect returns `tickable:false` — give them a concrete
+   handle ("think about the last time an agent touched your data pipeline") and only the real
+   connection clears it. **This bar is the same in both lanes.** Do not dump all the modules at once.
 
 ## Make it concrete to *their* work
 

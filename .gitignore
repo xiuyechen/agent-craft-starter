@@ -16,3 +16,8 @@ venv/
 .claude/settings.local.json
 # NOTE: .claude/settings.json IS committed on purpose — it carries the deny-list
 # and the guard hook (Principles 05). Don't add `.claude/*.json` back here.
+
+# Per-student learner-maps and session traces written by /teach-me (M1). Local to each
+# clone, one dir per student, never committed to the shared starter. (Also the right
+# posture if these ever hold real student data — see eval/infrastructure-roadmap.md DP-0.)
+learners/
